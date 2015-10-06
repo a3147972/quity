@@ -1,24 +1,13 @@
 <?php
-namespace Admin\Controller;
+namespace Home\Controller;
 
-use Common\Tools\Page;
 use Think\Controller;
 
 class BaseController extends Controller
 {
-    /**
-     * 公共类初始化，判断是否已登录
-     * @method _initialize
-     */
     public function _initialize()
     {
-        if (!session('uid')) {
-            redirect(U('Login/login'));
-        }
-        //禁止访问模块
-        if (in_array(ACTION_NAME , explode(',', $this->notAllowAction))) {
-            $this->_empty();
-        }
+
     }
 
     /**
@@ -93,64 +82,6 @@ class BaseController extends Controller
             $this->success('新增成功', U(CONTROLLER_NAME . '/index'));
         } else {
             $this->error('新增失败');
-        }
-    }
-
-    public function edit()
-    {
-        $model = D(CONTROLLER_NAME);
-
-        $pk = $model->getPk();
-
-        $map[$pk] = I('get.' . $pk);
-
-        $info = $model->_get($map);
-
-        $this->assign('vo', $info);
-        $this->assign('action', 'edit');
-        $this->display('add');
-    }
-
-    /**
-     * 默认更新数据
-     */
-    public function update()
-    {
-        $model = D(CONTROLLER_NAME);
-
-        if (!$model->create()) {
-            $this->error($model->getError());
-        }
-
-        $pk = $model->getPk();
-
-        $map[$pk] = I($pk);
-        $update_result = $model->where($map)->save();
-
-        if ($update_result !== false) {
-            $this->success('修改成功', U(CONTROLLER_NAME . '/index'));
-        } else {
-            $this->error('修改失败');
-        }
-    }
-
-    /**
-     * 默认删除
-     */
-    public function del()
-    {
-        $model = D(CONTROLLER_NAME);
-
-        $pk = $model->getPk();
-
-        $map[$pk] = I($pk);
-
-        $del_result = $model->where($map)->delete();
-
-        if ($del_result) {
-            $this->success('删除成功', U(CONTROLLER_NAME . '/index'));
-        } else {
-            $this->error('删除失败');
         }
     }
 

@@ -1,9 +1,9 @@
 <?php
-namespace Admin\Controller;
+namespace Home\Controller;
 
-use Admin\Controller\BaseController;
+use Think\Controller;
 
-class LoginController extends BaseController
+class LoginController extends Controller
 {
     public function login()
     {
@@ -12,12 +12,11 @@ class LoginController extends BaseController
     /**
      * 检测登录
      * @method checkLogin
-     * @return [type]     [description]
      */
     public function checkLogin()
     {
         if (!IS_POST) {
-            $this->error('非法访问');
+            $this->error('非法请求');
         }
         $username = I('post.username');
         $password = I('post.password');
@@ -25,22 +24,21 @@ class LoginController extends BaseController
         if (empty($username)) {
             $this->error('请输入用户名');
         }
-
         if (empty($password)) {
             $this->error('请输入密码');
         }
-        $model = D('Admin');
+
+        $model = D('Member');
         $result = $model->login($username, $password);
 
         if ($result) {
             session('uid', $result['id']);
-            session('nickname', $result['nickname']);
+            session('name', $result['name']);
             $this->success('登录成功', U('Index/index'));
         } else {
             $this->error($model->getError());
         }
     }
-
     /**
      * 退出
      * @method logout
@@ -49,6 +47,6 @@ class LoginController extends BaseController
     {
         session(null);
         session_regenerate_id();
-        redirect(U('Login/logout'));
+        redirect(U('Login/login'));
     }
 }

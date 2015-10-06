@@ -8,17 +8,27 @@ class AdminModel extends BaseModel
     protected $tableName = 'admin';
     protected $selectFields = 'id,username,password,nickname,is_enable,ctime';
     protected $_validate = array(
-        array('username', 'require', '请输入用户名'),
-        array('password', 'require', '请输入密码'),
-        array('nickname', 'require', '请输入昵称'),
+        array('username', 'require', '请输入用户名', 1),
+        array('nickname', 'require', '请输入昵称', 1),
+        array('username', '', '用户名已存在', 0, 'unique', 1),
     );
     protected $_auto = array(
-        array('password', 'md5', 3, 'function'),
+        array('password', 'md5', 1, 'function'),
+        array('password', 'auto_password', 2, 'callback'),
         array('password', '', 2, 'ignore'),
         array('is_enable', 1, 1, 'string'),
         array('ctime', 'now', 1, 'function'),
         array('mtime', 'now', 3, 'function'),
     );
+    protected function auto_password($v)
+    {
+
+        if (empty($v)) {
+            return '';
+        } else {
+            return md5($v);
+        }
+    }
     /**
      * 管理员登录
      * @method login
