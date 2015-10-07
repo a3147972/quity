@@ -43,7 +43,7 @@ class BaseController extends Controller
 
         //分页处理
         $page_list = $this->page($count, $page, $page_size);
-        dump($list);
+
         $this->assign('page_list', $page_list);
         $this->assign('count', $count);
         $this->assign('list', $list);
