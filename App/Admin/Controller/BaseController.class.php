@@ -13,7 +13,7 @@ class BaseController extends Controller
     public function _initialize()
     {
         if (!session('uid')) {
-            redirect(U('Login/login'));
+            // redirect(U('Login/login'));
         }
         //禁止访问模块
         if (in_array(ACTION_NAME , explode(',', $this->notAllowAction))) {

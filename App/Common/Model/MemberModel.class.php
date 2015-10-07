@@ -11,7 +11,6 @@ class MemberModel extends BaseModel
     protected $_validate = array(
         array('username', 'require', '请输入用户名', 1),
         array('username', '', '用户名已存在', 0, 'unique', 1, 1),
-        array('nickname', 'require', '请输入昵称', 1),
         array('password', 'require', '请输入密码', 0, 'regex', 1),
         array('second_password', 'require', '请输入二级密码', 0, 'regex', 1),
         array('phone', 'require', '请输入联系电话', 1),
@@ -26,9 +25,14 @@ class MemberModel extends BaseModel
         array('second_password', 'auto_password', 2, 'callback'),
         array('second_password', '', 2, 'ignore'),
         array('is_enable', 1, 1, 'string'),
+        array('admin_id', 'auto_admin', 3, 'callback'),
         array('ctime', 'now', 1, 'function'),
         array('mtime', 'now', 3, 'function'),
     );
+    protected function auto_admin()
+    {
+        return session('uid');
+    }
 
     protected function auto_password($v)
     {
@@ -73,7 +77,7 @@ class MemberModel extends BaseModel
     public function addGold($uid, $gold)
     {
         $map['id'] = $uid;
-        $data['gold'] = array('exp', 'gold + '.$gold);
+        $data['gold'] = array('exp', 'gold + ' . $gold);
 
         $result = $this->where($map)->save($data);
 
@@ -94,7 +98,35 @@ class MemberModel extends BaseModel
     public function delGold($uid, $gold)
     {
         $map['id'] = $uid;
-        $data['gold'] = array('exp', 'gold -'.$gold);
+        $data['gold'] = array('exp', 'gold -' . $gold);
+
+        $result = $this->where($map)->save($data);
+
+        if ($result) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function addQuity($uid, $quity)
+    {
+        $map['id'] = $uid;
+        $data['quity'] = array('exp', 'quity +' . $quity);
+
+        $result = $this->where($map)->save($data);
+
+        if ($result) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function delQuity($uid, $quity)
+    {
+        $map['id'] = $uid;
+        $data['quity'] = array('exp', 'quity -' . $quity);
 
         $result = $this->where($map)->save($data);
 

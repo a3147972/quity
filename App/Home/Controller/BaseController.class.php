@@ -1,6 +1,7 @@
 <?php
 namespace Home\Controller;
 
+use Common\Tools\Page;
 use Think\Controller;
 
 class BaseController extends Controller

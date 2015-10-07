@@ -14,7 +14,13 @@ class GoldWithdrawModel extends BaseModel
     );
     protected $_auto = array(
         array('status', 0, 1, 'string'),
+        array('admin_id', 'auto_admin', 2, 'callback'),
         array('ctime', 'now', 1, 'function'),
         array('mtime', 'now', 3, 'function'),
     );
+
+    protected function auto_admin()
+    {
+        return session('uid');
+    }
 }

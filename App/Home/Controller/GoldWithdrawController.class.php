@@ -5,6 +5,10 @@ use Home\Controller\BaseController;
 
 class GoldWithdrawController extends BaseController
 {
+    /**
+     * 提交申请提现申请
+     * @method insert
+     */
     public function insert()
     {
         $model = D('GoldWithdraw');
