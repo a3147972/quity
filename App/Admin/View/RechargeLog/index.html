@@ -21,8 +21,8 @@
               <li>
                 <i class="icon-home">
                 </i>
-                <a href="{:U('GoldToQuity/index')}">
-                  奖金币转股权
+                <a href="{:U('RechargeLog/index')}">
+                  奖金币充值
                 </a>
               </li>
             </ul>
@@ -30,7 +30,7 @@
           <div class="page-header">
             <div class="page-title">
               <h3>
-                奖金币转股权
+                奖金币充值
               </h3>
             </div>
           </div>
@@ -50,11 +50,9 @@
                           用户名
                         </th>
                         <th>
-                          总金额
+                          充值金额
                         </th>
-                        <th>当时股权单价</th>
-                        <th>购买股权数</th>
-                        <th>购买时间</th>
+                        <th>充值时间</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -62,11 +60,7 @@
                         <tr>
                           <td>{$vo.id}</td>
                           <td>{$vo.username}</td>
-                          <td>{$vo['quity_count'] * $vo['then_balance']}</td>
-                          <td>{$vo.then_balance}</td>
-                          <td>
-                          {$vo.quity_count}
-                          </td>
+                          <td>{$vo.gold}</td>
                           <td>{$vo.ctime}</td>
                         </tr>
                       </volist>

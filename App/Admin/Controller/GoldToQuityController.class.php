@@ -3,7 +3,7 @@ namespace Admin\Controller;
 
 use Admin\Controller\BaseController;
 
-class GoldTToQuityController extends BaseController
+class GoldToQuityController extends BaseController
 {
 
 }

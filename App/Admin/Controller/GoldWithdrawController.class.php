@@ -17,6 +17,7 @@ class GoldWithDrawController extends BaseController
     public function pass()
     {
         $id = I('id');
+        $map['id'] = $id;
         $result = D('GoldWithDraw')->where($map)->setField('status', 1);
         if ($result) {
             $this->success('操作成功', U('GoldWithDraw/index'));

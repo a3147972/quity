@@ -38,30 +38,34 @@ class MemberController extends BaseController
      */
     public function recharge()
     {
-        $gold = I('post.gold');
-        $member_id = I('post.member_id');
+        if (IS_POST) {
+            $gold = I('post.gold');
+            $member_id = I('post.member_id');
 
-        if (empty($gold)) {
-            $this->error('请输入要操作金额');
-        }
-        if (empty($member_id)) {
-            $this->error('请选择要操作会员');
-        }
+            if (empty($gold)) {
+                $this->error('请输入要操作金额');
+            }
+            if (empty($member_id)) {
+                $this->error('请选择要操作会员');
+            }
 
-        $map['id'] = $member_id;
-        $data['gold'] = array('exp', 'gold+'. $gold);
+            $map['id'] = $member_id;
+            $data['gold'] = array('exp', 'gold+' . $gold);
 
-        $model = D('Member');
-        $model->startTrans();
-        $result = $model->where($map)->save($data);
-        $write_log = D('RechargeLog')->write($gold, $member_id);
+            $model = D('Member');
+            $model->startTrans();
+            $result = $model->where($map)->save($data);
+            $write_log = D('RechargeLog')->write($gold, $member_id);
 
-        if ($result !== false && $write_log !== false) {
-            $model->commit();
-            $this->success('操作成功', U('Member/index'));
+            if ($result !== false && $write_log !== false) {
+                $model->commit();
+                $this->success('操作成功', U('Member/index'));
+            } else {
+                $model->rollback();
+                $this->error('操作失败');
+            }
         } else {
-            $model->rollback();
-            $this->error('操作失败');
+            $this->display();
         }
     }
 }

@@ -6,7 +6,7 @@ use Common\Model\BaseModel;
 class MemberModel extends BaseModel
 {
     protected $tableName = 'member';
-    protected $selectFields = 'id,name,username,password,second_password,gold,phone,quity,id_number,ctime';
+    protected $selectFields = 'id,name,username,password,second_password,gold,phone,quity,id_number,is_enable,ctime';
 
     protected $_validate = array(
         array('username', 'require', '请输入用户名', 1),

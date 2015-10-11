@@ -24,7 +24,7 @@ class BaseModel extends Model
     public function _list($map = array(), $field = '', $order = '', $page = 0, $page_size = 10)
     {
         $pk = $this->pk; //主键
-        $field = empty($field) ? $this->selectFields : $fields;
+        $field = empty($field) ? $this->selectFields : $field;
         $order = empty($order) ? $pk . ' desc' : $order;
         if ($page === 0) {
             $list = $this->where($map)->field($field)->order($order)->select();
