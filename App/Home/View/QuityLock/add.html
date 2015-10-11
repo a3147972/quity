@@ -38,23 +38,8 @@
           <h2 class="pull-left">
             <i class="icon-home">
             </i>
-            首页
+            股权锁定
           </h2>
-          <!-- Breadcrumb -->
-          <div class="bread-crumb pull-right">
-            <a href="index.html">
-              <i class="icon-home">
-              </i>
-              首页
-            </a>
-            <!-- Divider -->
-            <span class="divider">
-              /
-            </span>
-            <a href="#" class="bread-current">
-              控制台
-            </a>
-          </div>
           <div class="clearfix">
           </div>
         </div>
@@ -77,28 +62,56 @@
                     <div class="padd">
                       <form class="form-horizontal" role="form" action="{:U('insert')}" method="post" onsubmit="return ajaxForm(this)">
                         <h6>
-                          申请提现
+                          股权锁定
                         </h6>
                         <hr />
                         <div class="form-group">
                           <label class="col-lg-4 control-label">
-                            提现金额
+                            可锁定数量
                           </label>
                           <div class="col-lg-8">
-                            <input type="text" class="form-control" placeholder="提现金额" name="gold"
+                            {$quity_count}
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label class="col-lg-4 control-label">
+                            要锁定股权数量
+                          </label>
+                          <div class="col-lg-8">
+                            <input type="text" class="form-control" placeholder="要锁定股权数量" name="quity_count"
                             />
                           </div>
                         </div>
                         <div class="form-group">
-                                  <label class="col-lg-4 control-label">提现银行</label>
-                                  <div class="col-lg-8">
-                                    <select class="form-control" name="bank_id">
-                                      <volist name="bank_list" id="bank_vo">
-                                        <option value="{$bank_vo.id}">{$bank_vo.deposit_bank}</option>
-                                      </volist>
-                                    </select>
-                                  </div>
-                                </div>
+                          <label class="col-lg-4 control-label">
+                            当前单价
+                          </label>
+                          <div class="col-lg-8">
+                          <input type="text" class="form-control" placeholder="当前单价" name="then_balance" value="{$then_balance}" readonly="readonly"
+                            />
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label class="col-lg-4 control-label">
+                            锁定时间
+                          </label>
+                          <div class="col-lg-8">
+                            <select class="form-control" name="unlock_time">
+                              <volist name="lock_time" id="lock_time_vo">
+                                <option value="{$lock_time_vo}">{$lock_time_vo}个月</option>
+                              </volist>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label class="col-lg-4 control-label">
+                            二级密码
+                          </label>
+                          <div class="col-lg-8">
+                          <input type="text" class="form-control" placeholder="二级密码" name="second_password" value=""
+                            />
+                          </div>
+                        </div>
                         <hr />
                         <div class="form-group">
                           <div class="col-lg-offset-1 col-lg-9">

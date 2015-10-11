@@ -10,13 +10,31 @@ class QuityLockController extends BaseController
         parent::_initialize();
         $this->unlock();
     }
+    public function add()
+    {
+        $then_balance = D('Quity')->getBalance();
+        $this->assign('then_balance', $then_balance);
+
+        $quity_count = D('Member')->where(array('id' => session('uid')))->getField('quity');
+        $this->assign('quity_count', $quity_count);
+
+        //锁定时间
+        $lock_time = C('Lock_time');
+        $lock_time = explode('|', $lock_time);
+        $this->assign('lock_time', $lock_time);
+        $this->display();
+    }
     /**
      * 股权锁定
      * @method insert
-     * @return [type] [description]
      */
     public function insert()
     {
+        $second_password = D('Member')->where(array('id' => session('uid')))->getField('second_password');
+
+        if (md5(I('second_password')) != $second_password) {
+            $this->error('二级密码不正确');
+        }
         $model = D('QuityLock');
 
         if (!$model->create()) {

@@ -11,7 +11,16 @@ class BankController extends BaseController
 
         return $map;
     }
+    public function _before_add()
+    {
+        $map['member_id'] = session('uid');
 
+        $count = D('Bank')->_count($map);
+
+        if ($count >= 5) {
+            $this->error('最多只可添加5张银行卡');
+        }
+    }
     public function insert()
     {
         $model = D(CONTROLLER_NAME);
