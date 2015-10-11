@@ -8,7 +8,7 @@ class BaseController extends Controller
 {
     public function _initialize()
     {
-
+        session('uid', 10000);
     }
 
     /**
@@ -28,12 +28,16 @@ class BaseController extends Controller
         $map = method_exists($this, '_filter') ? $this->_filter() : array();
 
         //查询数据
-        $list = $model->_list($map, '', $order, $page, $page_size);
+        if (method_exists($model, 'lists')) {
+            $list = $model->lists($map, '', $order, $page, $page_size);
+        } else {
+            $list = $model->_list($map, '', $order, $page, $page_size);
+        }
         $count = $model->_count($map);
 
         //分页处理
         $page_list = $this->page($count, $page, $page_size);
-        dump($list);
+
         $this->assign('page_list', $page_list);
         $this->assign('count', $count);
         $this->assign('list', $list);

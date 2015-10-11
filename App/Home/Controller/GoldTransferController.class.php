@@ -5,6 +5,12 @@ use Home\Controller\BaseController;
 
 class GoldTransferController extends BaseController
 {
+    public function _filter()
+    {
+        $map['member_id'] = session('uid');
+
+        return $map;
+    }
     /**
      * 金币转账
      * @method insert

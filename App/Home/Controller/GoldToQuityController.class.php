@@ -5,6 +5,19 @@ use Home\Controller\BaseController;
 
 class GoldToQuityController extends BaseController
 {
+    public function _filter()
+    {
+        $map['member_id'] = session('uid');
+
+        return $map;
+    }
+
+    public function add()
+    {
+        $quity_balance = D('Quity')->getBalance();
+        $this->assign('quity_balance', $quity_balance);
+        $this->display();
+    }
     /**
      * 奖金币转股权
      * @method insert

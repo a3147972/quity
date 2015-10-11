@@ -40,7 +40,7 @@ class MemberController extends BaseController
     {
         if (IS_POST) {
             $gold = I('post.gold');
-            $member_id = I('post.member_id');
+            $member_id = I('post.id');
 
             if (empty($gold)) {
                 $this->error('请输入要操作金额');
