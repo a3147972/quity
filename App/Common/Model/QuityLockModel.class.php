@@ -2,6 +2,7 @@
 namespace Common\Model;
 
 use Common\Model\BaseModel;
+use Common\Tools\ArrayHelper;
 
 class QuityLockModel extends BaseModel
 {
@@ -17,4 +18,27 @@ class QuityLockModel extends BaseModel
         array('ctime', 'now', 1, 'function'),
         array('mtime', 'now', 3, 'function'),
     );
+
+    public function lists($map = array(), $field = '', $order = '', $page = 1, $page_size = 10)
+    {
+        $list = $this->_list($map, $field, $order, $page, $page_size);
+
+        if (empty($list)) {
+            return array();
+        }
+
+        //查询会员表
+        $member_id = array_column($list, 'member_id');
+        $member_id = array_unique($member_id);
+        $member_map['id'] = array('in', $member_id);
+        $member_list = D('Member')->_list($member_map, 'id,username');
+        $member_list = ArrayHelper::array_key_replace($member_list, 'id', 'member_id');
+        $member_list = array_column($member_list, null, 'member_id');
+
+        foreach ($list as $_k => $_v) {
+            $list[$_k] = array_merge($_v, $member_list[$_v['member_id']]);
+        }
+
+        return $list;
+    }
 }

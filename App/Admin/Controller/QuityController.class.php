@@ -5,6 +5,10 @@ use Admin\Controller\BaseController;
 
 class QuityController extends BaseController
 {
+    public function index()
+    {
+        $this->display();
+    }
     /**
      * 股权价格修改
      * @method insert
@@ -44,12 +48,5 @@ class QuityController extends BaseController
      */
     public function dividend()
     {
-        //获取锁定股权数量
-        $model = D('QuityLock');
-
-        $map['status'] = 0;
-        $map['unlock_time'] = array('gt', now());
-
-        $list = $model->where($map);
     }
 }
