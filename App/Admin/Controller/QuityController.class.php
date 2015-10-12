@@ -2,6 +2,7 @@
 namespace Admin\Controller;
 
 use Admin\Controller\BaseController;
+use Common\Tools\ArrayHelper;
 
 class QuityController extends BaseController
 {
@@ -48,5 +49,40 @@ class QuityController extends BaseController
      */
     public function dividend()
     {
+        $share_amount = C('SHARE_AMOUNT'); //每股分红金额
+        //查询所有还在锁定的股权
+        $lock_map['status'] = 0;
+
+        $lock_list = D('QuityLock')->_list($lock_map, $lock_field);
+
+        if (empty($lock_list)) {
+            $this->error('没有在锁定中的股权');
+        }
+
+        $list = array();
+        $member_id = array();
+        foreach ($lock_list as $_k => $_v) {
+
+            $member_id = array_merge($member_id, array($_v['member_id']));
+
+            $lock_day = round((time() - strtotime($_v['ctime']) - 1) / 86400) + 1;
+
+            $list[$_v['member_id']]= $list[$_v['member_id']]+ ($_v['quity_count'] * $share_amount * $lock_day);
+        }
+
+        $member_map['id'] = array('in', $member_id);
+        $member_list = D('Member')->_list($member_map, 'id,name,admin_id,username,password,second_password,gold,phone,quity,id_number,is_enable,ctime,mtime');
+
+        foreach ($member_list as $_k => $_v) {
+            $member_list[$_k]['gold'] = $_v['gold'] + $list[$_v['id']];
+        }
+
+        $result = D('Member')->addAll($member_list, array(), true);
+
+        if ($result) {
+            $this->success('已完成分红');
+        } else {
+            $this->error('更新分红数据失败');
+        }
     }
 }
