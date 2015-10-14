@@ -8,11 +8,11 @@ class QuityDealController extends BaseController
     public function _initialize()
     {
         parent::_initialize();
-        $overdue_result = $this->overdue_order();       //处理过期订单
+        $overdue_result = $this->overdue_order(); //处理过期订单
     }
     public function _filter()
     {
-        $map['option'] = array('in', array(1,2));
+        $map['option'] = array('in', array(1, 2));
         $map['status'] = 0;
         return $map;
     }
@@ -27,16 +27,17 @@ class QuityDealController extends BaseController
         foreach ($quity_balance_date as $_k => $_v) {
             $quity_balance_date[$_k] = date('Y-m-d', strtotime($_v));
         }
-        $quity_balance =array_column($quity_balance_list, 'balance');
+        $quity_balance = array_column($quity_balance_list, 'balance');
 
         $this->assign('quity_balance_date', json_encode($quity_balance_date));
         $this->assign('quity_balance', json_encode($quity_balance));
     }
+
     public function _before_index()
     {
         $model = D('QuityDeal');
 
-        $deal_map['option'] = array('in', array(1,2));
+        $deal_map['option'] = array('in', array(1, 2));
         $deal_map['status'] = 0;
         $deal_list = $model->_list($deal_map, '', 'id desc', 1, 10);
 
@@ -133,12 +134,12 @@ class QuityDealController extends BaseController
             $this->error('交易信息不存在,请重新选择');
         }
         $user_info = D('Member')->_get(array('id' => session('user_id')));
-        $model->startTrans();   //开启事务处理
+        $model->startTrans(); //开启事务处理
 
         if (in_array($info['option'], array(3, 4)) && session('user_id') != $info['to_member_id']) {
             if (session('user_id') != $info['to_member_id']) {
-                    $this->error('此定向单您不可购买');
-                }
+                $this->error('此定向单您不可购买');
+            }
         }
         switch ($info['option']) {
             case 1:
@@ -150,7 +151,7 @@ class QuityDealController extends BaseController
                 $delQuity_result = D('Member')->delQuity(session('user_id'), $info['quity_count']);
 
                 $addQuity_result = D('Member')->addQuity($info['member_id'], $info['quity_count']);
-                $addGold_result = D('Member')->addGold(session('user_id'), $info['quity_count']*$info['then_balance']);
+                $addGold_result = D('Member')->addGold(session('user_id'), $info['quity_count'] * $info['then_balance']);
                 $delGold_result = true;
                 break;
             case 2:
