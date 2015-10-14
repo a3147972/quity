@@ -5,6 +5,11 @@ use Home\Controller\BaseController;
 
 class AboutController extends BaseController
 {
+    public function _filter()
+    {
+        $map['is_enable'] = 1;
+        return $map;
+    }
     public function content()
     {
         $id = I('id');
