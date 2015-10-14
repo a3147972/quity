@@ -45,7 +45,7 @@ class GoldTransferController extends BaseController
 
         if ($add_balance_result !== false && $del_balance_result !== false && $result !== false) {
             $model->commit();
-            $this->success('操作成功');
+            $this->success('操作成功', U('GoldTransfer/index'));
         } else {
             $model->rollback();
             $this->error('操作失败');
