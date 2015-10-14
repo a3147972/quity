@@ -44,10 +44,11 @@ class GoldToQuityController extends BaseController
         $model->startTrans();
         $result = $model->add();
         $del_gold = D('Member')->delGold(session('uid'), $total_balance);
+        $add_quity = D('Member')->addQuity(session('uid'), $quity_count);
 
         if ($result !== false && $del_gold !== false) {
             $model->commit();
-            $this->success('操作成功');
+            $this->success('操作成功', U('GoldToQuity/index'));
         } else {
             $model->rollback();
             $this->error('操作失败');
