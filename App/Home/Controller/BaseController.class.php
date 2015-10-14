@@ -8,7 +8,9 @@ class BaseController extends Controller
 {
     public function _initialize()
     {
-        session('uid', 10000);
+        if (!session('uid')) {
+            redirect(U('Login/login'));
+        }
     }
 
     /**
