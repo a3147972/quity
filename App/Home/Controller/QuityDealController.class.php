@@ -10,6 +10,46 @@ class QuityDealController extends BaseController
         parent::_initialize();
         $overdue_result = $this->overdue_order();       //处理过期订单
     }
+    public function _filter()
+    {
+        $map['option'] = array('in', array(1,2));
+        $map['status'] = 0;
+        return $map;
+    }
+    /**
+     * 股权历史价格数据
+     */
+    public function quityBalanceList()
+    {
+        //股权单价纪录
+        $quity_balance_list = D('Quity')->_list(array(), '', 'ctime asc');
+        $quity_balance_date = array_column($quity_balance_list, 'ctime');
+        foreach ($quity_balance_date as $_k => $_v) {
+            $quity_balance_date[$_k] = date('Y-m-d', strtotime($_v));
+        }
+        $quity_balance =array_column($quity_balance_list, 'balance');
+
+        $this->assign('quity_balance_date', json_encode($quity_balance_date));
+        $this->assign('quity_balance', json_encode($quity_balance));
+    }
+    public function _before_index()
+    {
+        $model = D('QuityDeal');
+
+        $deal_map['option'] = array('in', array(1,2));
+        $deal_map['status'] = 0;
+        $deal_list = $model->_list($deal_map, '', 'id desc', 1, 10);
+
+        $this->assign('deal_list', $deal_list);
+
+        $this->quityBalanceList();
+    }
+
+    public function _before_add()
+    {
+        $then_balance = D('Quity')->getBalance();
+        $this->assign('then_balance', $then_balance);
+    }
 
     /**
      * 发起交易
@@ -17,6 +57,13 @@ class QuityDealController extends BaseController
      */
     public function insert()
     {
+        //二级密码验证
+        $second_password = D('Member')->where(array('id' => session('uid')))->getField('second_password');
+
+        if (md5(I('second_password')) != $second_password) {
+            $this->error('二级密码不正确');
+        }
+
         $model = D('QuityDeal');
 
         if (!$model->create()) {
@@ -66,6 +113,7 @@ class QuityDealController extends BaseController
             $this->error('操作失败');
         }
     }
+
     /**
      * 开始支付订单
      * @method buy

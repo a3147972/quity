@@ -1,0 +1,140 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <title>{:C('ADMIN_TITLE')}</title>
+    <include file="Public/style" />
+  </head>
+  <body>
+    <include file="Public/header" />
+    <div id="container">
+      <div id="sidebar" class="sidebar-fixed">
+        <include file="Public/menu" />
+      </div>
+      <div id="content">
+        <div class="container">
+          <div class="crumbs">
+            <ul id="breadcrumbs" class="breadcrumb">
+              <li>
+                <i class="icon-home">
+                </i>
+                <a href="{:U('Quity/add')}">
+                  股权价格设定
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="page-header">
+            <div class="page-title">
+              <h3>
+                股权价格设定
+              </h3>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="widget">
+                <div class="widget-header">
+                </div>
+                <div class="widget-content">
+                <form class="form-horizontal row-border col-md-7" action="{:U('insert')}" onsubmit="return ajaxForm(this)">
+                    <div class="form-group">
+                      <label class="col-md-2 control-label">
+                        设定价格:
+                      </label>
+                      <div class="input-group">
+                          <input type="text" name="balance" class="form-control" >
+                          <span class="input-group-btn">
+                            <input type="submit" value="提交" class="btn btn-primary">
+                          </span>
+                        </div>
+                    </div>
+                  </form>
+<table class="table table-hover table-bordered">
+                    <thead>
+                      <tr>
+                        <th>
+                          价格
+                        </th>
+                        <th>
+                          时间
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <volist name="list" id="vo">
+                        <tr>
+                          <td>{$vo.balance}</td>
+                          <td>{$vo.ctime|strtotime|date="Y-m-d", ###}</td>
+                        </tr>
+                      </volist>
+                    </tbody>
+                  </table>
+                  <div class="table-footer">
+                      <div class="col-md-12">
+                        <ul class="pagination">
+                        <volist name="page_list" id="page_vo">
+                          <switch name="page_vo.name">
+                            <case value="prev">
+                              <eq name="page_vo.status" value="disabled">
+                                 <li class="disabled">
+                                  <a href="javascript:void(0);">
+                                    ← Prev
+                                  </a>
+                                </li>
+                              <else />
+                                <li>
+                                  <a href="{$page_vo.url}">
+                                    ← Prev
+                                  </a>
+                                </li>
+                              </eq>
+                            </case>
+                            <case value="list">
+                              <eq name="page_vo.status" value="now">
+                                 <li class="active">
+                                  <a href="javascript:void(0);">
+                                    {$page_vo.page}
+                                  </a>
+                                </li>
+                              <else />
+                                <li>
+                                  <a href="{$page_vo.url}">
+                                    {$page_vo.page}
+                                  </a>
+                                </li>
+                              </eq>
+                            </case>
+                            <case value="next">
+                              <eq name="page_vo.status" value="disabled">
+                                 <li class="disabled">
+                                  <a href="javascript:void(0);">
+                                    Next →
+                                  </a>
+                                </li>
+                              <else />
+                                <li>
+                                  <a href="{$page_vo.url}">
+                                    Next →
+                                  </a>
+                                </li>
+                              </eq>
+                            </case>
+                          </switch>
+                        </volist>
+                        </ul>
+                      </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <include file="Public/script" />
+  </body>
+</html>

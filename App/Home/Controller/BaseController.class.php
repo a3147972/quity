@@ -33,6 +33,7 @@ class BaseController extends Controller
         } else {
             $list = $model->_list($map, '', $order, $page, $page_size);
         }
+
         $count = $model->_count($map);
 
         //分页处理
