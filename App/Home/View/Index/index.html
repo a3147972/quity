@@ -45,23 +45,49 @@
 
         <div class="matter">
         <div class="container">
-
-
-
+<div class="row">
+            <div class="col-md-12">
+              <!-- List starts -->
+              <ul class="today-datas">
+                <!-- List #1 -->
+                <li>
+                  <!-- Graph -->
+                  <div><span id="todayspark1" class="spark"><canvas width="77" height="30" style="display: inline-block; width: 77px; height: 30px; vertical-align: top;"></canvas></span></div>
+                  <!-- Text -->
+                  <div class="datas-text">股权数：{$info.quity}</div>
+                </li>
+                <li>
+                  <div><span id="todayspark2" class="spark"><canvas width="77" height="30" style="display: inline-block; width: 77px; height: 30px; vertical-align: top;"></canvas></span></div>
+                  <div class="datas-text">奖金币数: {$info.gold}</div>
+                </li>
+              </ul>
+            </div>
+          </div>
           <div class="row">
             <div class="col-md-12">
               <div class="widget">
+                <!-- Widget title -->
                 <div class="widget-head">
-                  <div class="pull-left">快速提交</div>
+                  <div class="pull-left">最新公告</div>
                   <div class="widget-icons pull-right">
                     <a href="#" class="wminimize"><i class="icon-chevron-up"></i></a>
+                    <a href="#" class="wclose"><i class="icon-remove"></i></a>
                   </div>
                   <div class="clearfix"></div>
                 </div>
                 <div class="widget-content">
-  1111
-                  <div class="widget-foot">
-                    <!-- Footer goes here -->
+                  <!-- Widget content -->
+                  <div class="padd">
+                    <ul class="recent">
+                      <volist name="about_list" id="about_vo">
+                        <li>
+                        <div class="recent-content">
+                          <div class="recent-meta"><a href="{:U('About/content', array('id' => $about_vo['id']))}">{$about_vo.title}</a> / {$about_vo.ctime}</div>
+                          <div class="clearfix"></div>
+                        </div>
+                      </li>
+                      </volist>
+                    </ul>
                   </div>
                 </div>
               </div>

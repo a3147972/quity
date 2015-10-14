@@ -52,6 +52,7 @@ class BaseController extends Controller
         $this->assign('page_list', $page_list);
         $this->assign('count', $count);
         $this->assign('list', $list);
+
         $this->display();
     }
 
