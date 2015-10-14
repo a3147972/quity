@@ -7,7 +7,7 @@ class IndexController extends BaseController
 {
     public function index()
     {
-        $info = D('Member')->_get(array('id' => session('uid')));
+        $info = D('Member')->_get(array('id' => session('user_id')));
         $this->assign('info', $info);
 
         //最新公告列表

@@ -7,7 +7,7 @@ use Common\Tools\ArrayHelper;
 class QuityDealModel extends BaseModel
 {
     protected $tableName = 'quity_deal';
-    protected $selectFields = 'id,member_id,quity_count,then_balance,option,to_member_id,type,overdue_time,status';
+    protected $selectFields = 'id,member_id,quity_count,then_balance,option,to_member_id,type,overdue_time,status,ctime';
 
     protected $_validate = array(
         array('quity_count', 'require', '请输入要交易的股权数量', 1),

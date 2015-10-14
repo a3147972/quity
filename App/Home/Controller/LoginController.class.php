@@ -32,7 +32,7 @@ class LoginController extends Controller
         $result = $model->login($username, $password);
 
         if ($result) {
-            session('uid', $result['id']);
+            session('user_id', $result['id']);
             session('name', $result['name']);
             $this->success('登录成功', U('Index/index'));
         } else {

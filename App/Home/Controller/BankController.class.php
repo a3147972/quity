@@ -7,13 +7,13 @@ class BankController extends BaseController
 {
     public function _filter()
     {
-        $map['member_id'] = session('uid');
+        $map['member_id'] = session('user_id');
 
         return $map;
     }
     public function _before_add()
     {
-        $map['member_id'] = session('uid');
+        $map['member_id'] = session('user_id');
 
         $count = D('Bank')->_count($map);
 
@@ -25,7 +25,7 @@ class BankController extends BaseController
     {
         $model = D(CONTROLLER_NAME);
         $data = $_POST;
-        $data['member_id'] = session('uid');
+        $data['member_id'] = session('user_id');
 
         if (!$model->create($data)) {
             $this->error($model->getError());

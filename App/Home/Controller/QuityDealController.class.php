@@ -58,7 +58,7 @@ class QuityDealController extends BaseController
     public function insert()
     {
         //二级密码验证
-        $second_password = D('Member')->where(array('id' => session('uid')))->getField('second_password');
+        $second_password = D('Member')->where(array('id' => session('user_id')))->getField('second_password');
 
         if (md5(I('second_password')) != $second_password) {
             $this->error('二级密码不正确');
@@ -72,7 +72,7 @@ class QuityDealController extends BaseController
         $option = I('post.option');
         $quity_count = I('post.quity_count');
 
-        $user_info = D('Member')->_get(array('id' => session('uid')));
+        $user_info = D('Member')->_get(array('id' => session('user_id')));
         $then_balance = D('Quity')->getBalance();
 
         if (in_array($option, array(2, 4))) {
@@ -93,21 +93,21 @@ class QuityDealController extends BaseController
         $overdue_day = I('post.overdue_day', 3);
 
         $model->overdue_time = date('Y-m-d H:i:s', strtotime('+' . $overdue_day . ' days', time()));
-        $model->member_id = session('uid');
+        $model->member_id = session('user_id');
         $model->then_balance = $then_balance;
 
         $model->startTrans();
         $result = $model->add();
 
         if (in_array($option, array(2, 4))) {
-            $user_result = D('Member')->delQuity(session('uid'), $quity_count);
+            $user_result = D('Member')->delQuity(session('user_id'), $quity_count);
         }
         if (in_array($option, array(1, 3))) {
-            $user_result = D('Member')->delGold(session('uid'), $total_balance);
+            $user_result = D('Member')->delGold(session('user_id'), $total_balance);
         }
         if ($result !== false && $user_result !== false) {
             $model->commit();
-            $this->success('操作成功');
+            $this->success('操作成功', U('QuityDeal/index'));
         } else {
             $model->rollback();
             $this->error('操作失败');
@@ -120,7 +120,6 @@ class QuityDealController extends BaseController
      */
     public function buy()
     {
-        session('uid', 10001);
         $id = I('id');
         $map['id'] = $id;
         $map['status'] = 0;
@@ -133,10 +132,11 @@ class QuityDealController extends BaseController
         if (empty($info)) {
             $this->error('交易信息不存在,请重新选择');
         }
-        $user_info = D('Member')->_get(session('uid'));
+        $user_info = D('Member')->_get(array('id' => session('user_id')));
         $model->startTrans();   //开启事务处理
-        if (in_array($info['option'], array(3, 4)) && session('uid') != $info['to_member_id']) {
-            if (session('uid') != $info['to_member_id']) {
+
+        if (in_array($info['option'], array(3, 4)) && session('user_id') != $info['to_member_id']) {
+            if (session('user_id') != $info['to_member_id']) {
                     $this->error('此定向单您不可购买');
                 }
         }
@@ -147,10 +147,10 @@ class QuityDealController extends BaseController
                 if ($user_info['quity'] < $info['quity_count']) {
                     $this->error('您的股权不足');
                 }
-                $delQuity_result = D('Member')->delQuity(session('uid'), $info['quity_count']);
+                $delQuity_result = D('Member')->delQuity(session('user_id'), $info['quity_count']);
 
                 $addQuity_result = D('Member')->addQuity($info['member_id'], $info['quity_count']);
-                $addGold_result = D('Member')->addGold(session('uid'), $info['quity_count']*$info['then_balance']);
+                $addGold_result = D('Member')->addGold(session('user_id'), $info['quity_count']*$info['then_balance']);
                 $delGold_result = true;
                 break;
             case 2:
@@ -159,13 +159,13 @@ class QuityDealController extends BaseController
                 if ($user_info['gold'] < $info['quity_count'] * $info['the_balance']) {
                     $this->error('您的余额不足以购买股权');
                 }
-                $addQuity_result = D('Member')->addQuity(session('uid'), $info['quity_count']);
+                $addQuity_result = D('Member')->addQuity(session('user_id'), $info['quity_count']);
                 $addGold_result = D('Member')->addGold($info['member_id'], $info['quity_count'] * $info['then_balance']);
-                $delGold_result = D('Member')->delGold(session('uid'), $info['quity_count'] * $info['then_balance']);
+                $delGold_result = D('Member')->delGold(session('user_id'), $info['quity_count'] * $info['then_balance']);
                 $delQuity_result = true;
                 break;
         }
-        $data['to_member_id'] = session('uid');
+        $data['to_member_id'] = session('user_id');
         $data['status'] = 1;
         $data['type'] = 1;
         $data['mtime'] = now();
@@ -190,7 +190,7 @@ class QuityDealController extends BaseController
 
         $map['overdue_time'] = array('lt', now());
         $map['status'] = 0;
-        $map['member_id'] = session('uid');
+        $map['member_id'] = session('user_id');
 
         $list = $model->_list($map);
 
@@ -215,13 +215,13 @@ class QuityDealController extends BaseController
         $model->startTrans();
 
         if (!empty($gold)) {
-            $addGold = D('Member')->addGold(session('uid'), $gold);
+            $addGold = D('Member')->addGold(session('user_id'), $gold);
         } else {
             $addGold = true;
         }
 
         if (!empty($quity)) {
-            $addQuity = D('Member')->addQuity(session('uid'), $quity);
+            $addQuity = D('Member')->addQuity(session('user_id'), $quity);
         } else {
             $addQuity = true;
         }

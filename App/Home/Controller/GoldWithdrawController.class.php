@@ -7,7 +7,7 @@ class GoldWithdrawController extends BaseController
 {
     public function _filter()
     {
-        $map['member_id'] = session('uid');
+        $map['member_id'] = session('user_id');
 
         return $map;
     }
@@ -23,13 +23,13 @@ class GoldWithdrawController extends BaseController
             $this->error('只有开盘交易时间才可以申请提现');
         }
         //银行卡列表
-        $map['member_id'] = session('uid');
+        $map['member_id'] = session('user_id');
         $bank_list = D('Bank')->_list($map);
         if (empty($bank_list)) {
             $this->error('请先添加银行卡', U('Bank/index'));
         }
         //当前金额
-        $gold = D('Member')->where(array('id' => session('uid')))->getField('gold');
+        $gold = D('Member')->where(array('id' => session('user_id')))->getField('gold');
 
         $this->assign('gold', $gold);
         $this->assign('bank_list', $bank_list);

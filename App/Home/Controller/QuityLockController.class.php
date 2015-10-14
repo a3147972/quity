@@ -10,12 +10,18 @@ class QuityLockController extends BaseController
         parent::_initialize();
         $this->unlock();
     }
+    public function _filter()
+    {
+        $map['member_id'] = session('user_id');
+
+        return $map;
+    }
     public function add()
     {
         $then_balance = D('Quity')->getBalance();
         $this->assign('then_balance', $then_balance);
 
-        $quity_count = D('Member')->where(array('id' => session('uid')))->getField('quity');
+        $quity_count = D('Member')->where(array('id' => session('user_id')))->getField('quity');
         $this->assign('quity_count', $quity_count);
 
         //锁定时间
@@ -30,7 +36,7 @@ class QuityLockController extends BaseController
      */
     public function insert()
     {
-        $second_password = D('Member')->where(array('id' => session('uid')))->getField('second_password');
+        $second_password = D('Member')->where(array('id' => session('user_id')))->getField('second_password');
 
         if (md5(I('second_password')) != $second_password) {
             $this->error('二级密码不正确');
@@ -41,25 +47,25 @@ class QuityLockController extends BaseController
             $this->error($model->getError());
         }
 
-        $user_info = D('Member')->_get(array('id' => session('uid')));
+        $user_info = D('Member')->_get(array('id' => session('user_id')));
         $quity_count = I('post.quity_count');
         $unlock_time = I('post.unlock_time');
         if ($quity_count > $user_info['quity']) {
             $this->error('您拥有的股权数量不足,无法锁定');
         }
 
-        $model->member_id = session('uid');
+        $model->member_id = session('user_id');
         $model->then_gold = D('Quity')->getBalance();
         $model->unlock_time = date('Y-m-d H:i:s', strtotime('+ ' . $unlock_time . 'month', time()));
 
         $model->startTrans();
 
         $result = $model->add();
-        $delQuity_result = D('Member')->delQuity(session('uid'), $quity_count);
+        $delQuity_result = D('Member')->delQuity(session('user_id'), $quity_count);
 
         if ($result !== false && $delQuity_result !== false) {
             $model->commit();
-            $this->success('操作成功');
+            $this->success('操作成功', U('QuityLock/index'));
         } else {
             $model->rollback();
             $this->error('操作失败');
@@ -75,7 +81,7 @@ class QuityLockController extends BaseController
     {
         $model = D('QuityLock');
 
-        $map['member_id'] = session('uid');
+        $map['member_id'] = session('user_id');
         $map['unlock_time'] = array('lt', now());
         $map['status'] = 0;
 
@@ -89,7 +95,7 @@ class QuityLockController extends BaseController
         $model->startTrans();
 
         $unlock_result = $model->where($map)->save($save_data);
-        $addQuity = D('Member')->addQuity(session('uid'), $quity_count);
+        $addQuity = D('Member')->addQuity(session('user_id'), $quity_count);
 
         if ($unlock_result !== false && $addQuity !== false) {
             $model->commit();

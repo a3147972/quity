@@ -43,21 +43,30 @@
         <div class="container">
           <div class="row">
             <div class="col-md-6">
-              <div id="echart" style="height:400px">
+              <div class="widget">
+                <div class="widget-content">
+                <div id="echart" style="height:400px">
 
+                </div>
+              </div>
               </div>
             </div>
             <div class="col-md-6">
-              <table class="table table-striped table-bordered table-hover">
+            <div class="widget">
+              <div class="widget-content">
+                <table class="table table-striped table-bordered table-hover">
                       <tbody>
-                        <tr>
-                          <volist name="deal_list" id="deal_vo">
-                            <td>{$deal_vo.quity_count}</td>
-                            <td>{$deal_vo.then_balance}</td>
-                          </volist>
-                        </tr>
+                        <volist name="deal_list" id="deal_vo">
+                          <tr>
+                              <td>{$deal_vo.quity_count}</td>
+                              <td>{$deal_vo.then_balance}</td>
+                          </tr>
+                        </volist>
                       </tbody>
                     </table>
+              </div>
+            </div>
+
             </div>
           </div>
           <div class="row">
@@ -76,6 +85,7 @@
                       <thead>
                         <tr>
                           <th>编号</th>
+                          <th>发起人</th>
                           <th>股权数量</th>
                           <th>当时股权单价</th>
                           <th>交易类型</th>
@@ -87,6 +97,7 @@
                         <volist name="list" id="vo">
                           <tr>
                             <td>{$vo.id}</td>
+                            <td>{$vo.member_id}</td>
                             <td>{$vo.quity_count}</td>
                             <td>{$vo.then_balance}</td>
                             <td>
@@ -97,7 +108,9 @@
                             </td>
                             <td>{$vo.overdue_time}</td>
                             <td>
-                              <a href="{:U('QuityDeal/buy', array('id' => $vo['id']))}">买入</a>
+                              <if condition="$vo['member_id'] neq session('uid')">
+                                <a href="#" _href="{:U('QuityDeal/buy', array('id' => $vo['id']))}" onclick="return DialogConfirm(this)">买入</a>
+                              </if>
                             </td>
                           </tr>
                         </volist>

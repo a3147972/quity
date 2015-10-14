@@ -7,7 +7,7 @@ class QuityController extends BaseController
 {
     public function index()
     {
-        $map['member_id|to_member_id'] = session('uid');
+        $map['member_id|to_member_id'] = session('user_id');
         $map['option'] = array('in', array(3,4));
         $page = I('page', 1);
         $page_size = I('page_size', 10);

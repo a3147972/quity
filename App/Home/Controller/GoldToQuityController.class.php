@@ -7,7 +7,7 @@ class GoldToQuityController extends BaseController
 {
     public function _filter()
     {
-        $map['member_id'] = session('uid');
+        $map['member_id'] = session('user_id');
 
         return $map;
     }
@@ -33,7 +33,7 @@ class GoldToQuityController extends BaseController
         $quity_balance = D('Quity')->getBalance();
         $total_balance = $quity_count * $quity_balance;
 
-        $member_balance = D('Member')->where(array('id' => session('uid')))->getField('gold');
+        $member_balance = D('Member')->where(array('id' => session('user_id')))->getField('gold');
 
         if ($total_balance > $member_balance) {
             $this->error('您账户的奖金币不足');
@@ -43,8 +43,8 @@ class GoldToQuityController extends BaseController
 
         $model->startTrans();
         $result = $model->add();
-        $del_gold = D('Member')->delGold(session('uid'), $total_balance);
-        $add_quity = D('Member')->addQuity(session('uid'), $quity_count);
+        $del_gold = D('Member')->delGold(session('user_id'), $total_balance);
+        $add_quity = D('Member')->addQuity(session('user_id'), $quity_count);
 
         if ($result !== false && $del_gold !== false) {
             $model->commit();

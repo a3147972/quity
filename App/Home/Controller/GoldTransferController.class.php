@@ -7,7 +7,7 @@ class GoldTransferController extends BaseController
 {
     public function _filter()
     {
-        $map['member_id'] = session('uid');
+        $map['member_id'] = session('user_id');
 
         return $map;
     }
@@ -32,7 +32,7 @@ class GoldTransferController extends BaseController
             $this->error('会员不存在');
         }
 
-        $member_balance = D('Member')->where(array('id' => session('uid')))->getField('gold');
+        $member_balance = D('Member')->where(array('id' => session('user_id')))->getField('gold');
 
         if ($gold > $member_balance) {
             $this->error('您的余额不足');
@@ -40,7 +40,7 @@ class GoldTransferController extends BaseController
 
         $model->startTrans();
         $add_balance_result = D('Member')->addGold($to_member_id, $gold);
-        $del_balance_result = D('Member')->delGold(session('uid'), $gold);
+        $del_balance_result = D('Member')->delGold(session('user_id'), $gold);
         $result = $model->add();
 
         if ($add_balance_result !== false && $del_balance_result !== false && $result !== false) {
