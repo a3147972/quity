@@ -74,7 +74,7 @@
                             <td>{$vo.deposit_name}</td>
                             <td>{$vo.deposit_code_number}</td>
                             <td>{$vo.deposit_address}</td>
-                            <td><a href="{:U('Bank/del', array('id' => $vo['id']))}">注销</a></td>
+                            <td><a href="#" _href="{:U('Bank/del', array('id' => $vo['id']))}" onclick="return DialogConfirm(this)">注销</a></td>
                           </tr>
                         </volist>
                       </tbody>

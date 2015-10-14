@@ -21,8 +21,8 @@
               <li>
                 <i class="icon-home">
                 </i>
-                <a href="{:U('About/index')}">
-                  公告管理
+                <a href="__SELF__">
+                  银行卡管理
                 </a>
               </li>
             </ul>
@@ -30,7 +30,7 @@
           <div class="page-header">
             <div class="page-title">
               <h3>
-                公告列表
+                银行卡列表
               </h3>
             </div>
           </div>
@@ -38,9 +38,6 @@
             <div class="col-md-12">
               <div class="widget">
                 <div class="widget-header">
-                  <div class="btn-toolbar btn-toolbar-demo">
-                    <a href="{:U('Admin/add')}" class="btn btn-lg btn-primary">新增</a>
-                  </div>
                 </div>
                 <div class="widget-content">
 <table class="table table-hover table-bordered">
@@ -50,11 +47,12 @@
                           ID
                         </th>
                         <th>
-                          标题
+                          开户行
                         </th>
-                        <th>
-                          状态
-                        </th>
+                        <th>开户名称</th>
+                        <th>开户卡号</th>
+                        <th>开户地址</th>
+
                         <th>操作</th>
                       </tr>
                     </thead>
@@ -62,28 +60,12 @@
                       <volist name="list" id="vo">
                         <tr>
                           <td>{$vo.id}</td>
-                          <td>{$vo.title}</td>
+                          <td>{$vo.deposit_bank}</td>
+                          <td>{$vo.deposit_name}</td>
+                          <td>{$vo.deposit_code_number}</td>
+                          <td>{$vo.deposit_address}</td>
                           <td>
-                          <switch name="vo.is_enable">
-                            <case value="1">
-                              正常
-                            </case>
-                            <case value="0">
-                              禁用
-                            </case>
-                          </switch>
-                          </td>
-                          <td>
-                            <switch name="vo.is_enable">
-                            <case value="1">
-                              <a href="#" _href="{:U('About/is_enable', array('id'=>$vo['id'],'status'=>0))}" onclick="return DialogConfirm(this)">禁用</a>
-                            </case>
-                            <case value="0">
-                              <a href="#" _href="{:U('About/is_enable', array('id'=>$vo['id'],'status'=>1))}" onclick="return DialogConfirm(this)">启用</a>
-                            </case>
-                          </switch>
-                          <a href="{:U('About/edit', array('id' => $vo['id']))}">编辑</a>
-                          <a href="{:U('About/del', array('id' => $vo['id']))}">删除</a>
+                          <a href="{:U('Bank/del', array('id' => $vo['id']))}">注销</a>
                           </td>
                         </tr>
                       </volist>

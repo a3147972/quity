@@ -92,6 +92,7 @@
                           </switch>
                           <a href="{:U('Member/edit', array('id' => $vo['id']))}">编辑</a>
                           <a href="{:U('Member/recharge', array('id' => $vo['id']))}">充值</a>
+                          <a href="{:U('Bank/index', array('member_id' => $vo['id']))}">查看银行卡列表</a>
                           </td>
                         </tr>
                       </volist>

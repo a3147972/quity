@@ -106,13 +106,23 @@
                             联系方式
                           </label>
                           <div class="col-lg-8">
-                            <input type="text" class="form-control" placeholder="联系方式" name="phone"
+                            <input type="text" class="form-control" placeholder="联系方式" name="phone" value="{$vo.phone}"
+                            />
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label class="col-lg-4 control-label">
+                            证件号码
+                          </label>
+                          <div class="col-lg-8">
+                            <input type="text" class="form-control" placeholder="联系方式" name="id_number" value="{$vo.id_number}" readonly="readonly"
                             />
                           </div>
                         </div>
                         <hr />
                         <div class="form-group">
                           <div class="col-lg-offset-1 col-lg-9">
+                            <input type="hidden" name="id" value="{:session('uid')}">
                             <button type="submit" class="btn btn-primary">
                               提交
                             </button>

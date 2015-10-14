@@ -32,7 +32,7 @@ class BankController extends BaseController
         }
 
         $insert_result = $model->add();
-        echo $model->_sql();
+
         if ($insert_result) {
             $this->success('新增成功', U(CONTROLLER_NAME . '/index'));
         } else {

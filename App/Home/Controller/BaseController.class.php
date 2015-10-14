@@ -98,4 +98,47 @@ class BaseController extends Controller
         redirect(U('Index/index'));
         exit();
     }
+
+    /**
+     * 默认更新数据
+     */
+    public function update()
+    {
+        $model = D(CONTROLLER_NAME);
+
+        if (!$model->create()) {
+            $this->error($model->getError());
+        }
+
+        $pk = $model->getPk();
+
+        $map[$pk] = I($pk);
+        $update_result = $model->where($map)->save();
+
+        if ($update_result !== false) {
+            $this->success('修改成功', U(CONTROLLER_NAME . '/index'));
+        } else {
+            $this->error('修改失败');
+        }
+    }
+
+    /**
+     * 默认删除
+     */
+    public function del()
+    {
+        $model = D(CONTROLLER_NAME);
+
+        $pk = $model->getPk();
+
+        $map[$pk] = I($pk);
+
+        $del_result = $model->where($map)->delete();
+
+        if ($del_result) {
+            $this->success('删除成功', U(CONTROLLER_NAME . '/index'));
+        } else {
+            $this->error('删除失败');
+        }
+    }
 }
