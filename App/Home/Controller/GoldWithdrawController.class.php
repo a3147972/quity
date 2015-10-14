@@ -58,7 +58,7 @@ class GoldWithdrawController extends BaseController
         if ($gold > $user_gold) {
             $this->error('您账户的奖金币不足');
         }
-
+        $model->member_id = session('uid');
         $model->startTrans();
         $insert_result = $model->add();
         $del_gold_result = D('Member')->delGold(session('uid'), $gold);
