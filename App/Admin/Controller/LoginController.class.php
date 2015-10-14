@@ -1,9 +1,9 @@
 <?php
 namespace Admin\Controller;
 
-use Admin\Controller\BaseController;
+use Think\Controller;
 
-class LoginController extends BaseController
+class LoginController extends Controller
 {
     public function login()
     {
@@ -49,6 +49,6 @@ class LoginController extends BaseController
     {
         session(null);
         session_regenerate_id();
-        redirect(U('Login/logout'));
+        redirect(U('Login/login'));
     }
 }
