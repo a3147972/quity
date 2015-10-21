@@ -68,4 +68,37 @@ class MemberController extends BaseController
             $this->display();
         }
     }
+
+    public function quity_recharge()
+    {
+        if (IS_POST) {
+            $quity = I('post.quity_count');
+            $member_id = I('post.id');
+
+            if (empty($quity)) {
+                $this->error('请输入要充值股权数');
+            }
+            if (empty($member_id)) {
+                $this->error('请选择要操作会员');
+            }
+
+            $map['id'] = $member_id;
+            $data['quity'] = array('exp', 'quity+' . $quity);
+
+            $model = D('Member');
+            $model->startTrans();
+            $result = $model->where($map)->save($data);
+            $write_log = D('QuityRechargeLog')->write($member_id, $quity);
+
+            if ($result !== false && $write_log !== false) {
+                $model->commit();
+                $this->success('操作成功', U('Member/index'));
+            } else {
+                $model->rollback();
+                $this->error('操作失败');
+            }
+        } else {
+            $this->display();
+        }
+    }
 }

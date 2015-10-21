@@ -21,8 +21,8 @@
               <li>
                 <i class="icon-home">
                 </i>
-                <a href="{:U('Member/index')}">
-                  会员管理
+                <a href="{:U('RechargeLog/index')}">
+                  股权充值记录
                 </a>
               </li>
             </ul>
@@ -30,7 +30,7 @@
           <div class="page-header">
             <div class="page-title">
               <h3>
-                会员列表
+                股权充值记录
               </h3>
             </div>
           </div>
@@ -38,9 +38,6 @@
             <div class="col-md-12">
               <div class="widget">
                 <div class="widget-header">
-                  <div class="btn-toolbar btn-toolbar-demo">
-                    <a href="{:U('Member/add')}" class="btn btn-lg btn-primary">新增</a>
-                  </div>
                 </div>
                 <div class="widget-content">
 <table class="table table-hover table-bordered">
@@ -52,14 +49,10 @@
                         <th>
                           用户名
                         </th>
-                        <th>奖金币数</th>
                         <th>
                           股权数
                         </th>
-                        <th>联系方式</th>
-                        <th>证件号码</th>
-                        <th>状态</th>
-                        <th>操作</th>
+                        <th>充值时间</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -67,34 +60,8 @@
                         <tr>
                           <td>{$vo.id}</td>
                           <td>{$vo.username}</td>
-                          <td>{$vo.gold}</td>
-                          <td>{$vo.quity}</td>
-                          <td>{$vo.phone}</td>
-                          <td>{$vo.id_number}</td>
-                          <td>
-                          <switch name="vo.is_enable">
-                            <case value="1">
-                              正常
-                            </case>
-                            <case value="0">
-                              禁用
-                            </case>
-                          </switch>
-                          </td>
-                          <td>
-                            <switch name="vo.is_enable">
-                            <case value="1">
-                              <a href="#" _href="{:U('Member/is_enable', array('id'=>$vo['id'],'status'=>0))}" onclick="return DialogConfirm(this)">禁用</a>
-                            </case>
-                            <case value="0">
-                              <a href="#" _href="{:U('Member/is_enable', array('id'=>$vo['id'],'status'=>1))}" onclick="return DialogConfirm(this)">启用</a>
-                            </case>
-                          </switch>
-                          <a href="{:U('Member/edit', array('id' => $vo['id']))}">编辑</a>
-                          <a href="{:U('Member/recharge', array('id' => $vo['id']))}">奖金币充值</a>
-                          <a href="{:U('Member/quity_recharge', array('id' => $vo['id']))}">股权充值</a>
-                          <a href="{:U('Bank/index', array('member_id' => $vo['id']))}">查看银行卡列表</a>
-                          </td>
+                          <td>{$vo.quity_count}</td>
+                          <td>{$vo.ctime}</td>
                         </tr>
                       </volist>
                     </tbody>
