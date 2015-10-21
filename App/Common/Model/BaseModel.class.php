@@ -25,7 +25,7 @@ class BaseModel extends Model
     {
         $pk = $this->pk; //主键
         $field = empty($field) ? $this->selectFields : $field;
-        $order = empty($order) ? $pk . ' desc' : $order;
+        $order = empty($order) ? $pk . ' asc' : $order;
         if ($page === 0) {
             $list = $this->where($map)->field($field)->order($order)->select();
         } else {

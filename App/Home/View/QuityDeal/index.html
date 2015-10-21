@@ -56,10 +56,23 @@
               <div class="widget-content">
                 <table class="table table-striped table-bordered table-hover">
                       <tbody>
+                          <tr>
+                              <th>股权数量</th>
+                              <th>股权价格</th>
+                          </tr>
                         <volist name="deal_list" id="deal_vo">
                           <tr>
-                              <td>{$deal_vo.quity_count}</td>
-                              <td>{$deal_vo.then_balance}</td>
+                              <switch name="deal_vo.option">
+                                <case value="1|3">
+                                  <td><span style="color:red">{$deal_vo.quity_count}</span></td>
+                                  <td><span style="color:red">{$deal_vo.then_balance}</span></td>
+                                </case>
+                                <case value="2|4">
+                                  <td><span style="color:#00ff00">{$deal_vo.quity_count}</span></td>
+                                  <td><span style="color:#00ff00">{$deal_vo.then_balance}</span></td>
+                                </case>
+                              </switch>
+
                           </tr>
                         </volist>
                       </tbody>

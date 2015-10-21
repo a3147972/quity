@@ -11,7 +11,7 @@ class GoldTransferModel extends BaseModel
 
     protected $_validate = array(
         array('gold', 'require', '请输入要转账金额', 1),
-        array('to_member_id', 'require', '请输入要转给的会员编号', 1),
+        array('to_member_id', 'require', '请输入要转给的会员昵称', 1),
     );
     protected $_auto = array(
         array('status', 0, 1, 'string'),

@@ -26,7 +26,7 @@ class GoldTransferController extends BaseController
         $gold = I('post.gold');
         $to_member_id = I('post.to_member_id');
 
-        $to_member_info = D('Member')->_get(array('id' => $to_member_id));
+        $to_member_info = D('Member')->_get(array('username' => $to_member_id));
 
         if (empty($to_member_info)) {
             $this->error('会员不存在');
@@ -37,7 +37,7 @@ class GoldTransferController extends BaseController
         if ($gold > $member_balance) {
             $this->error('您的余额不足');
         }
-
+        $model->to_member_id = $to_member_info['id'];
         $model->startTrans();
         $add_balance_result = D('Member')->addGold($to_member_id, $gold);
         $del_balance_result = D('Member')->delGold(session('user_id'), $gold);
