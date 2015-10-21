@@ -10,6 +10,17 @@ class GoldWithDrawController extends BaseController
     {
         parent::_initialize();
     }
+    public function _filter()
+    {
+        $map = array();
+        $status = I('status');
+        if (in_array($status, array(0, 1, -1))) {
+            $status = I('status');
+            $map['status'] = $status;
+        }
+
+        return $map;
+    }
     /**
      * 审核成功
      * @method pass
