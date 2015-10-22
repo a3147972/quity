@@ -21,7 +21,7 @@ class GoldToQuityModel extends BaseModel
 
     protected function auto_member()
     {
-        return session('uid');
+        return session('user_id');
     }
 
     public function lists($map = array(), $field = '', $order = '', $page = 0, $page_size = 0)

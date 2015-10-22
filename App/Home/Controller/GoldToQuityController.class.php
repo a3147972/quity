@@ -24,7 +24,7 @@ class GoldToQuityController extends BaseController
      */
     public function insert()
     {
-        $model = D('GoldToquity');
+        $model = D('GoldToQuity');
 
         if (!$model->create()) {
             $this->error($model->getError());

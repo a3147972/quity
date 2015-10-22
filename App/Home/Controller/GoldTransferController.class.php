@@ -38,8 +38,10 @@ class GoldTransferController extends BaseController
             $this->error('您的余额不足');
         }
         $model->to_member_id = $to_member_info['id'];
+        $model->member_id = session('user_id');
+
         $model->startTrans();
-        $add_balance_result = D('Member')->addGold($to_member_id, $gold);
+        $add_balance_result = D('Member')->addGold($to_member_info['id'], $gold);
         $del_balance_result = D('Member')->delGold(session('user_id'), $gold);
         $result = $model->add();
 

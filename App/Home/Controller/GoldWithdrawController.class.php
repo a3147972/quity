@@ -41,7 +41,7 @@ class GoldWithdrawController extends BaseController
      */
     public function insert()
     {
-        $second_password = D('Member')->where(array('id' => session('uid')))->getField('second_password');
+        $second_password = D('Member')->where(array('id' => session('user_id')))->getField('second_password');
 
         if (md5(I('second_password')) != $second_password) {
             $this->error('二级密码不正确');
@@ -53,15 +53,15 @@ class GoldWithdrawController extends BaseController
             $this->error($model->getError());
         }
         $gold = I('post.gold');
-        $user_gold = D('Member')->where(array('id' => session('uid')))->getField('gold');
+        $user_gold = D('Member')->where(array('id' => session('user_id')))->getField('gold');
 
         if ($gold > $user_gold) {
             $this->error('您账户的奖金币不足');
         }
-        $model->member_id = session('uid');
+        $model->member_id = session('user_id');
         $model->startTrans();
         $insert_result = $model->add();
-        $del_gold_result = D('Member')->delGold(session('uid'), $gold);
+        $del_gold_result = D('Member')->delGold(session('user_id'), $gold);
 
         if ($insert_result !== false && $del_gold !== false) {
             $model->commit();

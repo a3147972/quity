@@ -11,6 +11,17 @@ class BaseController extends Controller
         if (!session('user_id')) {
             redirect(U('Login/login'));
         }
+        $info = D('Member')->_get(array('id' => session('user_id')));
+        $this->assign('user_info', $info);
+
+        //锁定股权数量
+        $lock_map['member_id'] = session('user_id');
+        $lock_map['status'] = 0;
+
+        $lock_info = D('QuityLock')->where($lock_map)->field('sum(`quity_count`) as lock_quity_count')->find();
+        $lock_quity_count = empty($lock_info['lock_quity_count']) ? 0 : $lock_info['lock_quity_count'];
+
+        $this->assign('lock_quity_count', $lock_quity_count);
     }
 
     /**
