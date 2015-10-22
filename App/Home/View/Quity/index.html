@@ -94,14 +94,16 @@
                             </td>
                             <td>
                               <switch name="vo.status">
-                                <case value="0">出售中</case>
+                                <case value="0">交易中</case>
                                 <case value="1">已完成</case>
                               </switch>
                             </td>
                             <td>
                               <switch name="vo.status">
                                 <case value="0">
-                                    <a href="#" _href="{:U('QuityDeal/buy', array('id' => $vo['id']))}" onclick="return DialogConfirm(this)">确认购买</a>
+                                    <if condition="session(user_id) neq $vo['member_id']">
+                                      <a href="#" _href="{:U('QuityDeal/buy', array('id' => $vo['id']))}" onclick="return DialogConfirm(this)">确认购买</a>
+                                    </if>
                                 </case>
                               </switch>
                             </td>

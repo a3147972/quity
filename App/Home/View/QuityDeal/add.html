@@ -94,7 +94,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" style="display:none">
                           <label class="col-lg-4 control-label">
                             目标编号
                           </label>
@@ -146,5 +146,15 @@
     <!-- Content ends -->
     <include file="Public/footer" />
     <include file="Public/script" />
+    <script>
+      $('[name=option]').change(function(){
+        var val = $(this).val();
+        if (val == 3 || val == 4) {
+          $('[name=to_member_id]').parents('.form-group').show();
+        } else {
+          $('[name=to_member_id]').parents('.form-group').hide();
+        }
+      })
+    </script>
   </body>
 </html>
