@@ -5,18 +5,6 @@ use Think\Controller;
 
 class LoginController extends Controller
 {
-    public function test()
-    {
-        $list[0]['title'] = '标题一';
-        $list[0]['content'] = '内容';
-        $list[1]['title'] = '标题二';
-        $list[1]['content'] = '内容11111';
-
-        $title[] = 'title';
-        $title[] = 'content';
-
-        explode_excel($list, $title);
-    }
     public function login()
     {
         $this->display();

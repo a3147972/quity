@@ -44,14 +44,14 @@ class GoldWithdrawModel extends BaseModel
         $member_id = array_column($list, 'member_id');
         $member_id = array_unique($member_id);
         $member_map['id'] = array('in', $member_id);
-        $member_list = D('Member')->_list($member_map, 'id,username');
+        $member_list = D('Member')->_list($member_map, 'id,username,name');
         $member_list = ArrayHelper::array_key_replace($member_list, 'id', 'member_id');
         $member_list = array_column($member_list, null, 'member_id');
         //查询银行表
         $bank_id = array_column($list, 'bank_id');
         $bank_id = array_unique($bank_id);
         $bank_map['id'] = array('in', $bank_id);
-        $bank_list = D('Bank')->_list($bank_map, 'id,deposit_bank');
+        $bank_list = D('Bank')->_list($bank_map, 'id,deposit_bank,deposit_name,deposit_code_number,deposit_address');
         $bank_list = ArrayHelper::array_key_replace($bank_list, 'id', 'bank_id');
         $bank_list = array_column($bank_list, null, 'bank_id');
         foreach ($list as $_k => $_v) {
