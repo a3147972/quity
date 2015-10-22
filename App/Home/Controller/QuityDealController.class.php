@@ -72,6 +72,14 @@ class QuityDealController extends BaseController
         }
         $option = I('post.option');
         $quity_count = I('post.quity_count');
+        $to_member_id = I('post.to_member_id');
+        if (!empty($to_member_id)) {
+            $to_member_info = D('Member')->_get(array('username' => $to_member_id));
+            if (empty($to_member_info)) {
+                $this->error('会员不存在');
+            }
+            $model->to_member_id = $to_member_info['id'];
+        }
 
         $user_info = D('Member')->_get(array('id' => session('user_id')));
         $then_balance = D('Quity')->getBalance();
