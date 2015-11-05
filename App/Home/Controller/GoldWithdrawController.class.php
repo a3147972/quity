@@ -29,7 +29,7 @@ class GoldWithdrawController extends BaseController
             $this->error('请先添加银行卡', U('Bank/index'));
         }
         //当前金额
-        $gold = D('Member')->where(array('id' => session('user_id')))->getField('gold');
+        $gold = D('Member')->where(array('id' => session('user_id')))->getField('quity_gold');
 
         $this->assign('gold', $gold);
         $this->assign('bank_list', $bank_list);
@@ -53,7 +53,7 @@ class GoldWithdrawController extends BaseController
             $this->error($model->getError());
         }
         $gold = I('post.gold');
-        $user_gold = D('Member')->where(array('id' => session('user_id')))->getField('gold');
+        $user_gold = D('Member')->where(array('id' => session('user_id')))->getField('quity_gold');
 
         if ($gold > $user_gold) {
             $this->error('您账户的奖金币不足');
@@ -61,9 +61,9 @@ class GoldWithdrawController extends BaseController
         $model->member_id = session('user_id');
         $model->startTrans();
         $insert_result = $model->add();
-        $del_gold_result = D('Member')->delGold(session('user_id'), $gold);
+        $del_gold_result = D('Member')->delQuityGold(session('user_id'), $gold);
 
-        if ($insert_result !== false && $del_gold !== false) {
+        if ($insert_result !== false && $del_gold_result !== false) {
             $model->commit();
             $this->success('申请提现成功', U('GoldWithdraw/index'));
         } else {

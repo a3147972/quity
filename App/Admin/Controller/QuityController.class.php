@@ -2,7 +2,6 @@
 namespace Admin\Controller;
 
 use Admin\Controller\BaseController;
-use Common\Tools\ArrayHelper;
 
 class QuityController extends BaseController
 {
@@ -97,21 +96,29 @@ class QuityController extends BaseController
 
             $lock_day = round((time() - strtotime($_v['ctime']) - 1) / 86400) + 1;
 
-            $list[$_v['member_id']]= $list[$_v['member_id']]+ ($_v['quity_count'] * $share_amount * $lock_day);
+            $list[$_v['member_id']] = $list[$_v['member_id']] + ($_v['quity_count'] * $share_amount * $lock_day);
         }
-
+        $MemberModel = D('Member');
         $member_map['id'] = array('in', $member_id);
-        $member_list = D('Member')->_list($member_map, 'id,name,admin_id,username,password,second_password,gold,phone,quity,id_number,is_enable,ctime,mtime');
-
+        $member_list = $MemberModel->_list($member_map, 'id,name,admin_id,username,password,second_password,gold,quity,quity_gold,phone,id_number,is_enable,ctime,mtime');
+        $dividend_data = array();
         foreach ($member_list as $_k => $_v) {
-            $member_list[$_k]['gold'] = $_v['gold'] + $list[$_v['id']];
+            $member_list[$_k]['quity_gold'] = $_v['quity_gold'] + $list[$_v['id']];
+            $dividend_data['member_id'] = $_v['id'];
+            $dividend_data['gold'] = $list[$_v['id']];
+            $dividend_data['create_time'] = now();
+            $dividend_data['modify_time'] = now();
         }
 
-        $result = D('Member')->addAll($member_list, array(), true);
+        $MemberModel->startTrans();
 
+        $result = $MemberModel->addAll($member_list, array(), true);
+        $dividend_result = D('QuityGoldDividend')->addAll($dividend_data);
         if ($result) {
+            $MemberModel->commit();
             $this->success('已完成分红');
         } else {
+            $MemberModel->rollback();
             $this->error('更新分红数据失败');
         }
     }

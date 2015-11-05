@@ -29,9 +29,10 @@ class GoldWithDrawController extends BaseController
     {
         $id = I('id');
         $map['id'] = $id;
-        $result = D('GoldWithDraw')->where($map)->setField('status', 1);
+        $result = D('GoldWithdraw')->where($map)->setField('status', 1);
+
         if ($result) {
-            $this->success('操作成功', U('GoldWithDraw/index'));
+            $this->success('操作成功', U('GoldWithdraw/index'));
         } else {
             $this->error('操作失败');
         }
@@ -44,7 +45,7 @@ class GoldWithDrawController extends BaseController
     {
         $id = I('id');
         $map['id'] = $id;
-        $model = D('GoldWithDraw');
+        $model = D('GoldWithdraw');
 
         $info = $model->_get($map);
         $model->startTrans();
@@ -54,7 +55,7 @@ class GoldWithDrawController extends BaseController
 
         if ($result !== false && $add_gold_result) {
             $model->commit();
-            $this->success('操作成功', U('GoldWithDraw/index'));
+            $this->success('操作成功', U('GoldWithdraw/index'));
         } else {
             $this->error('操作失败');
         }
@@ -64,7 +65,7 @@ class GoldWithDrawController extends BaseController
     {
         $map = $this->_filter();
 
-        $list = D('GoldWithDraw')->lists($map);
+        $list = D('GoldWithdraw')->lists($map);
         $title['id'] = '编号';
         $title['username'] = '用户名';
         $title['name'] = '姓名';

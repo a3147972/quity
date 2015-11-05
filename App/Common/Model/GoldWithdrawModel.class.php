@@ -47,6 +47,7 @@ class GoldWithdrawModel extends BaseModel
         $member_list = D('Member')->_list($member_map, 'id,username,name');
         $member_list = ArrayHelper::array_key_replace($member_list, 'id', 'member_id');
         $member_list = array_column($member_list, null, 'member_id');
+
         //查询银行表
         $bank_id = array_column($list, 'bank_id');
         $bank_id = array_unique($bank_id);
@@ -55,6 +56,9 @@ class GoldWithdrawModel extends BaseModel
         $bank_list = ArrayHelper::array_key_replace($bank_list, 'id', 'bank_id');
         $bank_list = array_column($bank_list, null, 'bank_id');
         foreach ($list as $_k => $_v) {
+            if (empty($bank_list[$_v['bank_id']])) {
+                $bank_list[$_v['bank_id']] = array();
+            }
             $list[$_k] = array_merge($_v, $member_list[$_v['member_id']], $bank_list[$_v['bank_id']]);
         }
 

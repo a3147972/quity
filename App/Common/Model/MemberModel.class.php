@@ -6,7 +6,7 @@ use Common\Model\BaseModel;
 class MemberModel extends BaseModel
 {
     protected $tableName = 'member';
-    protected $selectFields = 'id,name,username,password,second_password,gold,phone,quity,id_number,is_enable,ctime';
+    protected $selectFields = 'id,name,username,password,second_password,gold,phone,quity,quity_gold,id_number,is_enable,ctime';
 
     protected $_validate = array(
         array('username', 'require', '请输入用户名', 1),
@@ -127,6 +127,20 @@ class MemberModel extends BaseModel
     {
         $map['id'] = $uid;
         $data['quity'] = array('exp', 'quity -' . $quity);
+
+        $result = $this->where($map)->save($data);
+
+        if ($result) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function delQuityGold($uid, $quity_gold)
+    {
+        $map['id'] = $uid;
+        $data['quity_gold'] = array('exp', 'quity_gold -' . $quity_gold);
 
         $result = $this->where($map)->save($data);
 

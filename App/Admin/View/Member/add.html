@@ -114,6 +114,14 @@
                       </div>
                     </div>
                     <div class="form-group">
+                      <label class="col-md-2 control-label">
+                        股权奖金数:
+                      </label>
+                      <div class="col-md-10">
+                        <input type="text" name="quity_gold" class="form-control" value="{$vo.quity_gold}" <eq name="action" value="edit">readonly="readonly"</eq>>
+                      </div>
+                    </div>
+                    <div class="form-group">
                       <div class="col-md-10">
                           <eq name="action" value="edit">
                             <input type="hidden" name="id" value="{:I('id')}">
