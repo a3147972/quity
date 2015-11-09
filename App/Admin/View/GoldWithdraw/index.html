@@ -84,7 +84,7 @@
                           <td>
 
                             <eq name="vo.status" value="0">
-                              <a href="#" _href="{:U('GoldWithdraw/pass', array('id'=>$vo['id']))}" onclick="return DialogConfirm(this)">申请通过</a>
+                              <a href="{:U('GoldWithdraw/pass', array('id'=>$vo['id']))}">申请通过</a>
                               <a href="#" _href="{:U('GoldWithdraw/lose', array('id'=>$vo['id']))}" onclick="return DialogConfirm(this)">申请驳回</a>
                             </eq>
                           </td>

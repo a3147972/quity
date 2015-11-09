@@ -52,7 +52,7 @@ class MemberModel extends BaseModel
     public function login($username, $password)
     {
         $map['username'] = $username;
-
+        $map['is_enable'] = 1;
         $info = $this->_get($map);
 
         if (empty($info)) {

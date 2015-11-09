@@ -38,8 +38,9 @@
           <h2 class="pull-left">
             <i class="icon-home">
             </i>
-            发起交易
+          修改密码
           </h2>
+
           <div class="clearfix">
           </div>
         </div>
@@ -60,67 +61,36 @@
                   </div>
                   <div class="widget-content">
                     <div class="padd">
-                      <form class="form-horizontal" role="form" action="{:U('insert')}" method="post" onsubmit="return ajaxForm(this)">
+                      <form class="form-horizontal" role="form" action="{:U('Member/changePwd')}" method="post" onsubmit="return ajaxForm(this)">
                         <h6>
-                          发起交易
+                          修改密码
                         </h6>
                         <hr />
                         <div class="form-group">
                           <label class="col-lg-4 control-label">
-                            股权数量
+                            原密码
                           </label>
                           <div class="col-lg-8">
-                            <input type="text" class="form-control" placeholder="股权数量" name="quity_count" />
-                          </div>
-                        </div>
-                        <div class="form-group">
-                          <label class="col-lg-4 control-label">
-                            当前单价
-                          </label>
-                          <div class="col-lg-8">
-                            <input type="text" class="form-control" placeholder="当前单价" name="then_balance" value="{$then_balance}" readonly="readonly"
-                            />
-                          </div>
-                        </div>
-                        <div class="form-group">
-                          <label class="col-lg-4 control-label">操作</label>
-                            <div class="col-lg-8">
-                                <select class="form-control" name="option">
-                                    <option value="1">买入</option>
-                                    <option value="2">卖出</option>
-                                    <option value="3">定向买入</option>
-                                    <option value="4">定向卖出</option>
-                                  </volist>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group" style="display:none">
-                          <label class="col-lg-4 control-label">
-                            目标编号
-                          </label>
-                          <div class="col-lg-8">
-                            <input type="text" class="form-control" placeholder="目标编号" name="to_member_id"
+                            <input type="text" class="form-control" placeholder="原密码" name="old_password"
                             />
                           </div>
                         </div>
                         <div class="form-group">
                           <label class="col-lg-4 control-label">
-                            有效天数
+                            新密码
                           </label>
                           <div class="col-lg-8">
-                            <select name="overdue_day" class="form-control">
-                              <volist name="deal_time" id="deal_vo">
-                                <option value="{$deal_vo}">{$deal_vo}天</option>
-                              </volist>
-                            </select>
+                            <input type="text" class="form-control" placeholder="新密码" name="password"
+                            />
                           </div>
                         </div>
                         <div class="form-group">
                           <label class="col-lg-4 control-label">
-                            二级密码
+                            再次输入新密码:
                           </label>
                           <div class="col-lg-8">
-                            <input type="password" class="form-control" placeholder="二级密码" name="second_password" />
+                            <input type="text" class="form-control" placeholder="再次输入新密码" name="rep_password"
+                            />
                           </div>
                         </div>
                         <hr />
@@ -148,15 +118,5 @@
     <!-- Content ends -->
     <include file="Public/footer" />
     <include file="Public/script" />
-    <script>
-      $('[name=option]').change(function(){
-        var val = $(this).val();
-        if (val == 3 || val == 4) {
-          $('[name=to_member_id]').parents('.form-group').show();
-        } else {
-          $('[name=to_member_id]').parents('.form-group').hide();
-        }
-      })
-    </script>
   </body>
 </html>

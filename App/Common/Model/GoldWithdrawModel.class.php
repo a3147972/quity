@@ -7,7 +7,7 @@ use Common\Tools\ArrayHelper;
 class GoldWithdrawModel extends BaseModel
 {
     protected $tableName = 'gold_withdraw';
-    protected $selectFields = 'id,member_id,gold,bank_id,remark,status,ctime';
+    protected $selectFields = 'id,member_id,gold,bank_id,pic,remark,status,ctime';
 
     protected $_validate = array(
         array('gold', 'require', '请输入要提现金额', 1),

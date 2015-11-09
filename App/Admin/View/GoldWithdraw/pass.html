@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -20,8 +21,8 @@
               <li>
                 <i class="icon-home">
                 </i>
-                <a href="{:U('System/index')}">
-                  系统设置
+                <a href="{:U('Member/index')}">
+                  奖金币提现
                 </a>
               </li>
             </ul>
@@ -29,7 +30,7 @@
           <div class="page-header">
             <div class="page-title">
               <h3>
-               系统设置
+                奖金币提现
               </h3>
             </div>
           </div>
@@ -39,59 +40,60 @@
                 <div class="widget-header">
                 </div>
                 <div class="widget-content">
-                  <form class="form-horizontal row-border" action="{:U('saveConfig')}" onsubmit="return ajaxForm(this)">
+                  <form class="form-horizontal row-border" action="{:U('pass')}" onsubmit="return ajaxForm(this)">
                     <div class="form-group">
                       <label class="col-md-2 control-label">
-                        是否允许提现:
+                        用户名:
                       </label>
                       <div class="col-md-10">
-                        <label class="radio-inline">
-                          <input type="radio" class="uniform" name="open_status" value="1" <if condition="C('open_status') eq 1">checked="checked"</if>>
-                          是
-                        </label>
-                        <label class="radio-inline">
-                          <input type="radio" class="uniform" name="open_status" value="0" <if condition="C('open_status') eq 0">checked="checked"</if>>
-                          否
-                        </label>
+                        <input type="text" name="username" class="form-control" value="{$vo.username}" readonly>
                       </div>
                     </div>
                     <div class="form-group">
                       <label class="col-md-2 control-label">
-                        开盘时间:
+                        提现金额:
                       </label>
                       <div class="col-md-10">
-                        <input type="text" name="open_time" class="form-control" value="{:C('open_time')}">
+                        <input type="text" name="gold" class="form-control" value="{$vo.gold}" readonly>
                       </div>
                     </div>
                     <div class="form-group">
                       <label class="col-md-2 control-label">
-                        股权锁定时间:
+                        转账截图:
                       </label>
                       <div class="col-md-10">
-                        <input type="text" name="lock_time" class="form-control" value="{:C('lock_time')}">
+                        <div class="input-group">
+                          <input type="text" name="pic" class="form-control" readonly>
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button" onclick="document.all.tt.click()">
+                              上传截图
+                            </button>
+                            <input type="file" name="tt" id="uploadPic" style="display:none">
+                          </span>
+                        </div>
                       </div>
                     </div>
                     <div class="form-group">
                       <label class="col-md-2 control-label">
-                        交易有效期:
+                        提现银行:
                       </label>
                       <div class="col-md-10">
-                        <input type="text" name="lock_time" class="form-control" value="{:C('deal_time')}">
+                        <input type="text" name="deposit_bank" class="form-control" value="{$vo.deposit_bank}" readonly>
                       </div>
                     </div>
                     <div class="form-group">
                       <label class="col-md-2 control-label">
-                        股权分红单股金额:
+                        银行卡号:
                       </label>
                       <div class="col-md-10">
-                        <input type="text" name="share_amount" class="form-control" value="{:C('share_amount')}">
+                        <input type="text" name="deposit_code_number" class="form-control" value="{$vo.deposit_code_number}" readonly>
                       </div>
                     </div>
                     <div class="form-group">
                       <div class="col-md-10">
-                          <eq name="action" value="edit">
-                            <input type="hidden" name="id" value="{:I('id')}">
-                          </eq>
+                          <input type="hidden" name="id" value="{:I('id')}">
+                          <input type="hidden" name="member_id" value="{$vo.member_id}">
+                          <input type="hidden" name="bank_id" value="{$vo.bank_id}">
                           <input type="submit" value="提交" class="btn btn-lg btn-primary">
                         </div>
                       </div>
@@ -104,5 +106,23 @@
       </div>
     </div>
     <include file="Public/script" />
+    <script src="__PUBLIC__/plugins/ajaxupload.js"></script>
+    <script>
+      $('#uploadPic').change(function(){
+        $.ajaxFileUpload({
+          url:"{:U('Public/upload')}",
+          secureuri:false,
+          fileElementId:'uploadPic',
+          dataType: 'json',
+          success: function (data) {
+              if (data.status == 1) {
+                $('input[name=pic]').val(data.info);
+              } else {
+                alert(data.info);
+              }
+          }
+        })
+      })
+    </script>
   </body>
 </html>

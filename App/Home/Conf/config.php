@@ -5,4 +5,5 @@ return array(
     ),
     'TITLE' => '股权管理系统',
     'SESSION_PREFIX' => 'member_',
+    'URL_MODEL' => 0,
 );

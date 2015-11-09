@@ -39,7 +39,25 @@
               <div class="widget">
                 <div class="widget-header">
                 </div>
+                <div class="search" style="border-bottom:1px solid #ececec;margin-bottom:10px;">
+                  <form action="{:U('index')}" method="get" class="form-horizontal row-border">
+                  <div class="form-group">
+                      <label for="" class="col-md-1 control-label">用户名:</label>
+                      <div class="col-md-4">
+                        <div class="input-group">
+                            <input type="text" name="username" id="" class="form-control">
+                        <span class="input-group-btn">
+                          <input type="submit" value="搜索" class="btn btn-lg btn-primary" style="height: 32px;line-height: 13px;">
+                        </span>
+                        </div>
+
+                      </div>
+                  </div>
+                </form>
+                </div>
+
                 <div class="widget-content">
+
 <table class="table table-hover table-bordered">
                     <thead>
                       <tr>

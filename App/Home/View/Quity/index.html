@@ -72,10 +72,10 @@
                         <volist name="list" id="vo">
                           <tr>
                             <td>{$vo.id}</td>
-                            <td>{$vo.member_id}</td>
+                            <td>{$vo.username}</td>
                             <td>{$vo.quity_count}</td>
                             <td>{$vo.then_balance}</td>
-                            <td>{$vo.to_member_id}</td>
+                            <td>{$vo.to_username}</td>
                             <td>
                               <switch name="vo.option">
                                 <case value="3">定向买入</case>
@@ -94,6 +94,7 @@
                             </td>
                             <td>
                               <switch name="vo.status">
+                                <case value="-1">已撤销</case>
                                 <case value="0">交易中</case>
                                 <case value="1">已完成</case>
                               </switch>
@@ -103,6 +104,8 @@
                                 <case value="0">
                                     <if condition="session(user_id) neq $vo['member_id']">
                                       <a href="#" _href="{:U('QuityDeal/buy', array('id' => $vo['id']))}" onclick="return DialogConfirm(this)">确认购买</a>
+                                    <else />
+                                      <a href="" _href="{:U('QuityDeal/undo', array('id' => $vo['id']))}" onclick="return DialogConfirm(this)">撤销</a>
                                     </if>
                                 </case>
                               </switch>

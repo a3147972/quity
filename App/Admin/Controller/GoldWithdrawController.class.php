@@ -27,15 +27,34 @@ class GoldWithDrawController extends BaseController
      */
     public function pass()
     {
-        $id = I('id');
-        $map['id'] = $id;
-        $result = D('GoldWithdraw')->where($map)->setField('status', 1);
+        $model = D('GoldWithdraw');
+        if (IS_POST) {
+            if (!$model->create()) {
+                $this->error($model->getError());
+            }
+            $pic = I('post.pic');
+            if (empty($pic)) {
+                $this->error('请上传转账截图');
+            }
+            $model->status = 1;
+            $id = I('id');
+            $map['id'] = $id;
+            $result = $model->where($map)->save();
 
-        if ($result) {
-            $this->success('操作成功', U('GoldWithdraw/index'));
+            if ($result) {
+                $this->success('操作成功', U('GoldWithdraw/index'));
+            } else {
+                $this->error('操作失败');
+            }
         } else {
-            $this->error('操作失败');
+            $id = I('id');
+            $map['id'] = $id;
+            $info = $model->lists($map);
+            $this->assign('vo', $info[0]);
+
+            $this->display();
         }
+
     }
     /**
      * 审核失败,返还金额

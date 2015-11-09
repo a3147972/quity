@@ -16,6 +16,12 @@ class QuityDealController extends BaseController
         $map['status'] = 0;
         return $map;
     }
+    public function add()
+    {
+        $this->assign('action', 'add');
+        $this->assign('deal_time', explode('|', C('deal_time')));
+        $this->display();
+    }
     /**
      * 股权历史价格数据
      */
@@ -77,6 +83,9 @@ class QuityDealController extends BaseController
             $to_member_info = D('Member')->_get(array('username' => $to_member_id));
             if (empty($to_member_info)) {
                 $this->error('会员不存在');
+            }
+            if ($to_member_info['id'] == session('user_id')) {
+                $this->error('自己无法和自己交易');
             }
             $model->to_member_id = $to_member_info['id'];
         }
@@ -243,5 +252,47 @@ class QuityDealController extends BaseController
             return false;
         }
 
+    }
+
+    /**
+     * 定向单撤销
+     */
+    public function undo()
+    {
+        $id = I('id');
+
+        $map['id'] = $id;
+        $map['option'] = array('in', array(3,4));
+        $map['status'] = 0;
+
+        $model = D('QuityDeal');
+
+        $info = $model->_get($map);
+
+        if (empty($info)) {
+            $this->error('订单不存在或无法撤销');
+        }
+
+        $option = $info['option'];
+        $model->startTrans();
+
+        switch($option) {
+            case 3:
+                $addResult = D('Member')->addGold(session('user_id'), $info['quity_count'] * $info['then_balance']);
+                break;
+            case 4:
+                $addResult = D('Member')->addQuity(session('user_id'), $info['quity_count']);
+                break;
+        }
+
+        $changeStatus = $model->where(array('id' => $info['id']))->setField('status', -1);
+
+        if ($addResult !== false && $changeStatus !== false) {
+            $model->commit();
+            $this->success('撤销成功');
+        } else {
+            $model->rollback();
+            $this->error('撤销失败');
+        }
     }
 }
