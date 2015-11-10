@@ -5,6 +5,18 @@ use Admin\Controller\BaseController;
 
 class MemberController extends BaseController
 {
+    public function _filter()
+    {
+        $map = array();
+
+        $username = I('username');
+
+        if (!empty($username)) {
+            $map['username'] = $username;
+        }
+
+        return $map;
+    }
     /**
      * 启用或禁用会员
      * @method is_enable
