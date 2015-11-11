@@ -75,7 +75,7 @@
                             <td>{$vo.deposit_bank}</td>
                             <td>
                               <notempty name="vo.pic">
-                                <img src="{$vo.pic}" width="200px" height="200px"/>
+                              <a _href="{$vo.pic}" onclick="return openPic(this)"/>查看</a>
                               </notempty >
                             </td>
                             <td>
@@ -121,6 +121,14 @@
 <include file="Public/footer" />
 
 <include file="Public/script" />
-
+<script>
+  function openPic(dom) {
+    var url = $(dom).attr('_href');
+    var iTop = (window.screen.availHeight-30-500)/2; //获得窗口的垂直位置;
+    var iLeft = (window.screen.availWidth-10-500)/2; //获得窗口的水平位置;
+    window.open(url,'','width=500,height=500,top='+iTop +',left='+iLeft);
+    return false;
+  }
+</script>
 </body>
 </html>

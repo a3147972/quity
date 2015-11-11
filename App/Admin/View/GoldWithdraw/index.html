@@ -61,6 +61,7 @@
                           提现金额
                         </th>
                         <th>提现银行</th>
+                        <th>转账图片</th>
                         <th>状态</th>
                         <th>
                           操作
@@ -74,6 +75,7 @@
                           <td>{$vo.username}</td>
                           <td>{$vo.gold}</td>
                           <td>{$vo.deposit_bank}</td>
+                          <td><img src="{$vo.pic}" alt="" width="100px"></td>
                           <td>
                           <switch name="vo.status">
                             <case value="1">已完成</case>

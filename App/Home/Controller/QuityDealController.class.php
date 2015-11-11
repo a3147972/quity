@@ -174,7 +174,8 @@ class QuityDealController extends BaseController
             case 2:
             case 4:
                 //卖出操作,减少A的股权增加A的金额,同时减少B的金额,增加B的股权
-                if ($user_info['gold'] < $info['quity_count'] * $info['the_balance']) {
+                dump($info);exit();
+                if ($user_info['gold'] < $info['quity_count'] * $info['then_balance']) {
                     $this->error('您的余额不足以购买股权');
                 }
                 $addQuity_result = D('Member')->addQuity(session('user_id'), $info['quity_count']);
@@ -278,10 +279,10 @@ class QuityDealController extends BaseController
 
         switch($option) {
             case 3:
-                $addResult = D('Member')->addGold(session('user_id'), $info['quity_count'] * $info['then_balance']);
+                $addResult = D('Member')->addGold($info['member_id'], $info['quity_count'] * $info['then_balance']);
                 break;
             case 4:
-                $addResult = D('Member')->addQuity(session('user_id'), $info['quity_count']);
+                $addResult = D('Member')->addQuity($info['member_id'], $info['quity_count']);
                 break;
         }
 
