@@ -11,131 +11,84 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"
     />
     <meta name="author" content="" />
+     <include file="Public/style" />
+      <include file="Public/script" />
   </head>
 
   <body>
-    <include file="Public/style" />
-    <include file="Public/header" />
-    <!-- Main content starts -->
-    <div class="content">
-      <!-- Sidebar -->
-      <div class="sidebar">
-        <div class="sidebar-dropdown">
-          <a href="#">
-            导航
-          </a>
-        </div>
-        <!-- Sidebar navigation -->
-        <!-- If the main navigation has sub navigation, then add the class "has_sub"
-        to "li" of main navigation. -->
+        <include file="Public/header" />
         <include file="Public/menu" />
-      </div>
-      <!-- Sidebar ends -->
-      <!-- Main bar -->
-      <div class="mainbar">
-        <!-- Page heading -->
-        <div class="page-head">
-          <h2 class="pull-left">
-            <i class="icon-home">
-            </i>
-            股权锁定
-          </h2>
-          <div class="clearfix">
-          </div>
-        </div>
-        <div class="matter">
-          <div class="container">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="widget">
-                  <div class="widget-head">
-                    <div class="widget-icons pull-right">
-                      <a href="#" class="wminimize">
-                        <i class="icon-chevron-up">
-                        </i>
-                      </a>
-                    </div>
-                    <div class="clearfix">
-                    </div>
-                  </div>
-                  <div class="widget-content">
-                    <div class="padd">
-                      <form class="form-horizontal" role="form" action="{:U('insert')}" method="post" onsubmit="return ajaxForm(this)">
-                        <h6>
-                          股权锁定
-                        </h6>
-                        <hr />
-                        <div class="form-group">
-                          <label class="col-lg-4 control-label">
-                            可锁定数量
-                          </label>
-                          <div class="col-lg-8">
-                            {$quity_count}
-                          </div>
-                        </div>
-                        <div class="form-group">
-                          <label class="col-lg-4 control-label">
-                            要锁定股权数量
-                          </label>
-                          <div class="col-lg-8">
-                            <input type="text" class="form-control" placeholder="要锁定股权数量" name="quity_count"
-                            />
-                          </div>
-                        </div>
-                        <div class="form-group">
-                          <label class="col-lg-4 control-label">
-                            当前单价
-                          </label>
-                          <div class="col-lg-8">
-                          <input type="text" class="form-control" placeholder="当前单价" name="then_balance" value="{$then_balance}" readonly="readonly"
-                            />
-                          </div>
-                        </div>
-                        <div class="form-group">
-                          <label class="col-lg-4 control-label">
-                            锁定时间
-                          </label>
-                          <div class="col-lg-8">
-                            <select class="form-control" name="unlock_time">
+        <!-- END SHORTCUT AREA -->
+        <div id="main" role="main">
+            <!-- RIBBON -->
+            <div id="ribbon">
+                <!-- breadcrumb -->
+                <ol class="breadcrumb">
+                    <span>当前时间:&nbsp;&nbsp;&nbsp;<span id="clockss"></span></span>
+                </ol>
+            </div>
+<div id="content" style="height:1500px"> 
+<div class="core_main User" id="viewNotice">
+	
+    <div class="core_title">
+    	<span class="core_title_con"><span>当前位置</span>：<span>股权交易》股权锁定》锁定股权</span></span>
+	
+        <span class="core_title_edit"></span>
+    </div>
+    <div class="core_con">
+          <form class="form-horizontal" role="form" action="{:U('insert')}" method="post" onsubmit="return ajaxForm(this)">
+        <table class="tablebg">
+		            <TR>
+              <TD class="tbkey">可锁定数量：</TD>
+              <TD class="tbval"> {$quity_count}
+              </TD>
+            </TR>
+            <TR>
+              <TD class="tbkey">要锁定股权数量：</td>
+              <TD class="tbval">  <input type="text" class="form-control" placeholder="要锁定股权数量" name="quity_count"
+                            /></td>
+            </TR>
+              <TR>
+              <TD class="tbkey">当前单价：</td>
+              <TD class="tbval">  <input type="text" class="form-control" placeholder="当前单价" name="then_balance" value="{$then_balance}" readonly
+                            /></td>
+            </TR>
+            <TR >
+              <TD class="tbkey"> 锁定时间：</td>
+              <TD class="tbval">   <select class="form-control" name="unlock_time">
                               <volist name="lock_time" id="lock_time_vo">
                                 <option value="{$lock_time_vo}">{$lock_time_vo}个月</option>
                               </volist>
-                            </select>
-                          </div>
-                        </div>
-                        <div class="form-group">
-                          <label class="col-lg-4 control-label">
-                            二级密码
-                          </label>
-                          <div class="col-lg-8">
-                          <input type="text" class="form-control" placeholder="二级密码" name="second_password" value=""
-                            />
-                          </div>
-                        </div>
-                        <hr />
-                        <div class="form-group">
-                          <div class="col-lg-offset-1 col-lg-9">
-                            <button type="submit" class="btn btn-primary">
+                            </select></td>
+            </TR>
+            <TR>
+              <TD class="tbkey">二级密码：</td>
+              <TD class="tbval"> <input type="text" class="form-control" placeholder="二级密码" name="second_password" value=""</td>
+            </TR>
+              
+            
+            <TR>		
+                <TD colspan="2">
+              <button type="submit" class="btn btn-primary">
                               提交
                             </button>
-                          </div>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Matter ends -->
+                </td>
+            </TR>
+        </TABLE> 
+      </form>
     </div>
-    <!-- Mainbar ends -->
-    <div class="clearfix">
-    </div>
-    <!-- Content ends -->
-    <include file="Public/footer" />
-    <include file="Public/script" />
-  </body>
+    
+</div>
+</div>
+ <script>
+      $('[name=option]').change(function(){
+        var val = $(this).val();
+        if (val == 3 || val == 4) {
+          $('[name=to_member_id]').parents('.form-group').show();
+        } else {
+          $('[name=to_member_id]').parents('.form-group').hide();
+        }
+      })
+    </script>
+</body>
 </html>

@@ -1,74 +1,44 @@
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta charset="utf-8">
-  <!-- Title and other stuffs -->
-  <title>{:C('TITLE')}</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="author" content="">
-  <include file="Public/style" />
-</head>
-<body>
-<include file="Public/header" />
-
-<!-- Main content starts -->
-
-<div class="content">
-
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <div class="sidebar-dropdown"><a href="#">导航</a></div>
-
-        <!--- Sidebar navigation -->
-        <!-- If the main navigation has sub navigation, then add the class "has_sub" to "li" of main navigation. -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>{:C('TITLE')}</title>
+        <meta name="description" content="">
+        <!-- Basic Styles -->
+       <include file="Public/styles" />
+       <include file="Public/script" />
+    </head>
+    <body>
+        <include file="Public/header" />
         <include file="Public/menu" />
+        <!-- END SHORTCUT AREA -->
+        <div id="main" role="main">
+            <!-- RIBBON -->
+            <div id="ribbon">
+                <!-- breadcrumb -->
+                <ol class="breadcrumb">
+                    <span>当前时间:&nbsp;&nbsp;&nbsp;<span id="clockss"></span></span>
+                </ol>
+            </div>
+<div id="content" style="height:1500px"> 
+<div class="core_main User" id="viewNotice">
+	<div class="core_title">
+    	<span class="core_title_con"><span>当前位置</span>：会员中心》银行卡资料</span>
+         <a href="{:U('add')}" class="btn btn-success">添加银行卡</a>
     </div>
-
-    <!-- Sidebar ends -->
-
-        <!-- Main bar -->
-    <div class="mainbar">
-
-        <!-- Page heading -->
-        <div class="page-head">
-          <h2 class="pull-left"><i class="icon-home"></i> 银行卡列表</h2>
-        <div class="clearfix"></div>
-
-        </div>
-        <!-- Page heading ends -->
-
-
-
-        <!-- Matter -->
-
-        <div class="matter">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-12">
-            <a href="{:U('add')}" class="btn btn-success">添加银行卡</a>
-              <div class="widget">
-                <div class="widget-head">
-                  <div class="pull-left">银行卡列表</div>
-                  <div class="widget-icons pull-right">
-                    <a href="#" class="wminimize"><i class="icon-chevron-up"></i></a>
-                  </div>
-                  <div class="clearfix"></div>
-                </div>
-                <div class="widget-content">
-                  <table class="table table-striped table-bordered table-hover">
-                      <thead>
-                        <tr>
-                          <th>开户行</th>
-                          <th>开户人</th>
-                          <th>卡号</th>
-                          <th>开户地址</th>
-                          <th>操作</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <volist name="list" id="vo">
+    
+    <div class="core_con">
+        <table class="tablebg">
+            <TR class="datafield">
+                <th><nobr>开户行</nobr></th>
+                <th><nobr>开户人</nobr></th>
+                <th><nobr>卡号</nobr></th>
+                <th><nobr>开户地址</nobr></th>
+                <th><nobr>操作</nobr></th>
+               
+            </TR>
+             <volist name="list" id="vo">
                           <tr>
                             <td>{$vo.deposit_bank}</td>
                             <td>{$vo.deposit_name}</td>
@@ -77,40 +47,26 @@
                             <td><a href="#" _href="{:U('Bank/del', array('id' => $vo['id']))}" onclick="return DialogConfirm(this)">注销</a></td>
                           </tr>
                         </volist>
-                      </tbody>
-                  </table>
-                  <div class="widget-foot">
+                </table>	
+    </div>
+        <div class="widget-foot" style="float:right">
                     <ul class="pagination">
                       <volist name="page_list" id="page_vo">
                         <switch name="page_vo.name">
                           <case value="prev">
-                            <li><a href="{$page_vo.url}">Prev</a></li>
+                            <li><a href="{$page_vo.url}">上一页</a></li>
                           </case>
                           <case value="list">
                             <li><a href="{$page_vo.url}">{$page_vo.page}</a></li>
                           </case>
                           <case value="next">
-                            <li><a href="{$page_vo.url}">Next</a></li>
+                            <li><a href="{$page_vo.url}">下一页</a></li>
                           </case>
                         </switch>
                       </volist>
                     </ul>
                   </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-          </div>
-        <!-- Matter ends -->
-    </div>
-   <!-- Mainbar ends -->
-   <div class="clearfix"></div>
 </div>
-<!-- Content ends -->
-<include file="Public/footer" />
-
-<include file="Public/script" />
-
+</div>
 </body>
 </html>

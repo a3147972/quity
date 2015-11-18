@@ -1,33 +1,47 @@
-<ul id="nav">
-          <!-- Main menu with font awesome icon -->
-          <li><a href="{:U('Index/index')}"><i class="icon-home"></i> 会员首页</a>
-          </li>
-           <li class="has_sub"><a href="#"><i class="icon-list-alt"></i> 新闻动态  <span class="pull-right"><i class="icon-chevron-right"></i></span></a>
-            <ul>
-              <li><a href="{:U('About/index')}">最新公告</a></li>
-            </ul>
-          </li>
-          <li class="has_sub"><a href="#"><i class="icon-list-alt"></i> 会员中心  <span class="pull-right"><i class="icon-chevron-right"></i></span></a>
-            <ul>
-              <li><a href="{:U('Member/changePwd')}">修改密码</a></li>
-              <li><a href="{:U('Member/changeSecondPwd')}">修改二级密码</a></li>
-              <li><a href="{:U('Member/index')}">个人资料</a></li>
-              <li><a href="{:U('Bank/index')}">银行资料</a></li>
-            </ul>
-          </li>
-          <li class="has_sub"><a href="#"><i class="icon-file-alt"></i> 财务管理 <span class="pull-right"><i class="icon-chevron-right"></i></span></a>
-            <ul>
-              <li><a href="{:U('GoldWithdraw/index')}">奖金币提现</a></li>
-              <li><a href="{:U('GoldToQuity/index')}">奖金币买股权</a></li>
-              <li><a href="{:U('GoldTransfer/index')}">奖金币转账</a></li>
-            </ul>
-          </li>
-          <li class="has_sub"><a href="#"><i class="icon-file-alt"></i> 股权交易  <span class="pull-right"><i class="icon-chevron-right"></i></span></a>
-            <ul>
-              <li><a href="{:U('QuityDeal/index')}">交易列表</a></li>
-              <li><a href="{:U('Quity/index')}">定向单</a></li>
-              <li><a href="{:U('QuityLock/index')}">股权锁定</a></li>
-            </ul>
-          </li>
-          <li><a href="{:U('Login/logout')}"><i class="icon-home"></i> 退出</a>
-        </ul>
+<aside id="left-panel">
+            <!-- User info -->
+            <div class="login-info">
+                <span style="font-family: FontAwesome;"> <a href="/index.php?s=/User/User/view" id="show-shortcut"> <span>{:session('name')}</span> <i class="fa fa-angle-down"></i> </a> </span>
+            </div>
+            <!-- end user info -->
+            <nav>
+                <ul>
+                   <li  class="active" >
+                        <a href="{:U('Index/index')}"  title="首页"  ><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">会员首页</span></a>
+                    </li>
+                    <li id="资料管理" class="">
+                    <a href="#"  title="资料管理"><i class="fa fa-lg fa-fw fa-briefcase"></i> <span class="menu-item-parent">新闻动态</span></a>
+                    <ul>
+                        <li id="资料查看">
+                     <a href="{:U('About/index')}">最新公告</a>
+                        </li>
+                                          </ul>
+                    </li><li id="会员中心" class="">
+                    <a href="#"  title="会员中心"><i class="fa fa-lg fa-fw fa-bar-chart-o"></i> <span class="menu-item-parent">会员中心</span></a>
+                    <ul>
+                       <li id="修改密码"><a href="{:U('Member/changePwd')}">修改密码</a></li>
+                       <li id="修改二级密码"><a href="{:U('Member/changeSecondPwd')}">修改二级密码</a></li>
+                       <li id="个人资料"><a href="{:U('Member/index')}">个人资料</a></li>
+                       <li id="银行资料"><a href="{:U('Bank/index')}">银行资料</a></li>
+                      </ul>
+                    </li>
+                    <li id="财务管理" class="">
+                    <a href="#"  title="财务管理"><i class="fa fa-lg fa-fw fa-sitemap"></i> <span class="menu-item-parent">财务管理</span></a>
+                    <ul>
+                      <li id="奖金币提现"><a href="{:U('GoldWithdraw/index')}">奖金币提现</a></li>
+                      <li id="奖金币买股权"><a href="{:U('GoldToQuity/index')}">奖金币买股权</a></li>
+                      <li id="电子币提现"><a href="{:U('GoldTransfer/index')}">奖金币转账</a></li>
+                      </ul>
+                    </li><li id="股权交易" class="">
+                    <a href="#"  title="股权交易"><i class="fa fa-lg fa-fw fa-bullhorn"></i> <span class="menu-item-parent">股权交易</span></a>
+                    <ul>
+                        <li id="交易列表"><a href="{:U('QuityDeal/index')}">交易列表</a></li>
+                        <li id="定向单"><a href="{:U('Quity/index')}">定向单</a></li>
+                       <li id="股权锁定"><a href="{:U('QuityLock/index')}">股权锁定</a></li>
+                       </ul>
+                                     
+                    </li> 
+                    </ul>              
+            </nav>
+            <span class="minifyme"> <i class="fa fa-arrow-circle-left hit"></i> </span>
+        </aside>

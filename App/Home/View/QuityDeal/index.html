@@ -1,35 +1,28 @@
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta charset="utf-8">
-  <!-- Title and other stuffs -->
-  <title>{:C('TITLE')}</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="author" content="">
-  <include file="Public/style" />
-</head>
-<body>
-<include file="Public/header" />
-
-<!-- Main content starts -->
-
-<div class="content">
-
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <div class="sidebar-dropdown"><a href="#">导航</a></div>
-
-        <!--- Sidebar navigation -->
-        <!-- If the main navigation has sub navigation, then add the class "has_sub" to "li" of main navigation. -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>{:C('TITLE')}</title>
+        <meta name="description" content="">
+        <!-- Basic Styles -->
+       <include file="Public/styles" />
+       <include file="Public/script" />
+    </head>
+    <body>
+        <include file="Public/header" />
         <include file="Public/menu" />
-    </div>
-
-    <!-- Sidebar ends -->
-
-        <!-- Main bar -->
-    <div class="mainbar">
+        <!-- END SHORTCUT AREA -->
+        <div id="main" role="main">
+            <!-- RIBBON -->
+            <div id="ribbon">
+                <!-- breadcrumb -->
+                <ol class="breadcrumb">
+                    <span>当前时间:&nbsp;&nbsp;&nbsp;<span id="clockss"></span></span>
+                </ol>
+            </div>
+<div id="content" style="height:1500px"> 
+<div class="mainbar">
 
         <!-- Page heading -->
         <div class="page-head">
@@ -153,14 +146,7 @@
         </div>
           </div>
     </div>
-   <!-- Mainbar ends -->
-   <div class="clearfix"></div>
-</div>
-<!-- Content ends -->
-<include file="Public/footer" />
-
-<include file="Public/script" />
-<script>
+    <script>
   // 路径配置
         require.config({
             paths: {
@@ -219,5 +205,6 @@
             }
         );
 </script>
+</div>
 </body>
 </html>

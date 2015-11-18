@@ -1,53 +1,28 @@
-
-<div class="navbar navbar-fixed-top bs-docs-nav" role="banner">
-    <div class="conjtainer">
-      <!-- Menu button for smallar screens -->
-      <div class="navbar-header">
-          <button class="navbar-toggle btn-navbar" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
-            <span>菜单</span>
-          </button>
-          <!-- Site name for smallar screens -->
-          <a href="{:U('Index/index')}" class="navbar-brand hidden-lg">首页</a>
-        </div>
-      <!-- Navigation starts -->
-      <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
-        <!-- Links -->
-        <ul class="nav navbar-nav pull-right">
-          <li class="dropdown pull-right"><a href="#"> 股权数:{$user_info.quity}&nbsp;&nbsp;奖金币数:{$user_info.gold} &nbsp;&nbsp;锁定股权数:{$lock_quity_count}&nbsp;&nbsp;股权奖金币:{$user_info.quity_gold}</a></li>
-          <li class="dropdown pull-right">
-            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-              <i class="icon-user"></i> {:session('name')} <b class="caret"></b>
-            </a>
-            <!-- Dropdown menu -->
-            <ul class="dropdown-menu">
-              <li><a href="{:U('Login/logout')}"><i class="icon-off"></i> 退出</a></li>
-            </ul>
-          </li>
-        </ul>
-      </nav>
-    </div>
-  </div>
-  <header>
-    <div class="container">
-      <div class="row">
-        <!-- Logo section -->
-        <div class="col-md-4">
-          <!-- Logo. -->
-          <div class="logo">
-            <h1><a href="#">{:C('TITLE')}<span class="bold"></span></a></h1>
-            <!-- <p class="meta">后台管理系统</p> -->
-          </div>
-          <!-- Logo ends -->
-        </div>
-        <!-- Button section -->
-        <div class="col-md-4">
-
-        </div>
-        <!-- Data section -->
-        <div class="col-md-4">
-          <div class="header-data">
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
+<header id="header">
+        <style>
+         .pleft{text-align: right;float: right;width: 85%;line-height: 45px;}
+        </style>
+            <div class="pleft">  <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+              账户：{:session('name')} 
+            </a>&nbsp;&nbsp;<a href="#"> 股权数:{$user_info.quity}&nbsp;&nbsp;奖金币数:{$user_info.gold} &nbsp;&nbsp;锁定股权数:{$lock_quity_count}&nbsp;&nbsp;股权奖金币:{$user_info.quity_gold}</a></div>
+            <!-- pulled right: nav area -->
+            <div class="pull-right">
+            
+                <div id="hide-menu" class="btn-header pull-right">
+                    <span> <a href="javascript:void(0);" title="显示/隐藏菜单"><i class="fa fa-reorder"></i></a> </span>
+                </div>
+                <div id="logout" class="btn-header transparent pull-right">
+                    <span> <a href="{:U('Login/logout')}"  title="退出"><i class="fa fa-sign-out"></i> </a> </span>
+                </div>
+                <!-- end logout button -->
+                <div id="fullscreen" class="btn-header transparent pull-right">
+                    <span> <a href="javascript:void(0);" onClick="launchFullscreen(document.documentElement);" title="全屏"><i class="fa fa-fullscreen"></i></a> </span>
+                </div>
+                <!-- end fullscreen button -->
+                <ul class="header-dropdown-list hidden-xs">
+                   
+                </ul>
+                <!-- end multiple lang -->
+            </div>
+            <!-- end pulled right: nav area -->
+        </header>

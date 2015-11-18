@@ -79,7 +79,7 @@ class QuityDealController extends BaseController
         $option = I('post.option');
         $quity_count = I('post.quity_count');
         $to_member_id = I('post.to_member_id');
-        if (!empty($to_member_id) && in_array($option,array(3,4)) {
+        if (!empty($to_member_id) && in_array($option,array(3,4))) {
             $to_member_info = D('Member')->_get(array('username' => $to_member_id));
             if (empty($to_member_info)) {
                 $this->error('会员不存在');

@@ -821,7 +821,7 @@ header .header-data .hdata em{
 
 .mainbar{
 	position: relative;
-	margin-left: 230px;
+	/*margin-left: 230px;*/
 	margin-right: 0px;
 	width: auto;
 	background:#eee url("../img/main-back.png") repeat;

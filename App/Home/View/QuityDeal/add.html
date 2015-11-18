@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta charset="utf-8" />
@@ -11,152 +10,94 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"
     />
     <meta name="author" content="" />
+     <include file="Public/style" />
+      <include file="Public/script" />
   </head>
 
   <body>
-    <include file="Public/style" />
-    <include file="Public/header" />
-    <!-- Main content starts -->
-    <div class="content">
-      <!-- Sidebar -->
-      <div class="sidebar">
-        <div class="sidebar-dropdown">
-          <a href="#">
-            导航
-          </a>
-        </div>
-        <!-- Sidebar navigation -->
-        <!-- If the main navigation has sub navigation, then add the class "has_sub"
-        to "li" of main navigation. -->
+        <include file="Public/header" />
         <include file="Public/menu" />
-      </div>
-      <!-- Sidebar ends -->
-      <!-- Main bar -->
-      <div class="mainbar">
-        <!-- Page heading -->
-        <div class="page-head">
-          <h2 class="pull-left">
-            <i class="icon-home">
-            </i>
-            发起交易
-          </h2>
-          <div class="clearfix">
-          </div>
-        </div>
-        <div class="matter">
-          <div class="container">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="widget">
-                  <div class="widget-head">
-                    <div class="widget-icons pull-right">
-                      <a href="#" class="wminimize">
-                        <i class="icon-chevron-up">
-                        </i>
-                      </a>
-                    </div>
-                    <div class="clearfix">
-                    </div>
-                  </div>
-                  <div class="widget-content">
-                    <div class="padd">
-                      <form class="form-horizontal" role="form" action="{:U('insert')}" method="post" onsubmit="return ajaxForm(this)">
-                        <h6>
-                          发起交易
-                        </h6>
-                        <hr />
-                        <div class="form-group">
-                          <label class="col-lg-4 control-label">
-                            股权数量
-                          </label>
-                          <div class="col-lg-8">
-                            <input type="text" class="form-control" placeholder="股权数量" name="quity_count" />
-                          </div>
-                        </div>
-                        <div class="form-group">
-                          <label class="col-lg-4 control-label">
-                            当前单价
-                          </label>
-                          <div class="col-lg-8">
-                            <input type="text" class="form-control" placeholder="当前单价" name="then_balance" value="{$then_balance}" readonly="readonly"
-                            />
-                          </div>
-                        </div>
-                        <div class="form-group">
-                          <label class="col-lg-4 control-label">操作</label>
-                            <div class="col-lg-8">
-                                <select class="form-control" name="option">
+        <!-- END SHORTCUT AREA -->
+        <div id="main" role="main">
+            <!-- RIBBON -->
+            <div id="ribbon">
+                <!-- breadcrumb -->
+                <ol class="breadcrumb">
+                    <span>当前时间:&nbsp;&nbsp;&nbsp;<span id="clockss"></span></span>
+                </ol>
+            </div>
+<div id="content" style="height:1500px">
+<div class="core_main User" id="viewNotice">
+
+    <div class="core_title">
+    	<span class="core_title_con"><span>当前位置</span>：<span>股权交易》交易列表》发起交易</span></span>
+
+        <span class="core_title_edit"></span>
+    </div>
+    <div class="core_con">
+           <form class="form-horizontal" role="form" action="{:U('insert')}" method="post" onsubmit="return ajaxForm(this)">
+        <table class="tablebg">
+		            <TR>
+              <TD class="tbkey">股权数量：</TD>
+              <TD class="tbval">  <input type="text" class="form-control" placeholder="股权数量" name="quity_count" />
+              </TD>
+            </TR>
+            <TR>
+              <TD class="tbkey">当前单价：</td>
+              <TD class="tbval">  <input type="text" class="form-control" placeholder="当前单价" name="then_balance" value="{$then_balance}" readonly
+                            /></td>
+            </TR>
+              <TR>
+              <TD class="tbkey">操作：</td>
+              <TD class="tbval"><select class="form-control" name="option">
                                     <option value="1">买入</option>
                                     <option value="2">卖出</option>
                                     <option value="3">定向买入</option>
                                     <option value="4">定向卖出</option>
                                   </volist>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group" style="display:none">
-                          <label class="col-lg-4 control-label">
-                            目标编号
-                          </label>
-                          <div class="col-lg-8">
-                            <input type="text" class="form-control" placeholder="目标编号" name="to_member_id"
-                            />
-                          </div>
-                        </div>
-                        <div class="form-group">
-                          <label class="col-lg-4 control-label">
-                            有效天数
-                          </label>
-                          <div class="col-lg-8">
-                            <select name="overdue_day" class="form-control">
+                                </select></td>
+            </TR>
+            <TR style="display:none">
+              <TD class="tbkey"> 目标编号：</td>
+              <TD class="tbval">
+              <input type="text" class="form-control" placeholder="目标编号" name="to_member_id"/>
+              </td>
+            </TR>
+            <TR>
+              <TD class="tbkey">有效天数：</td>
+              <TD class="tbval"> <select name="overdue_day" class="form-control">
                               <volist name="deal_time" id="deal_vo">
                                 <option value="{$deal_vo}">{$deal_vo}天</option>
                               </volist>
-                            </select>
-                          </div>
-                        </div>
-                        <div class="form-group">
-                          <label class="col-lg-4 control-label">
-                            二级密码
-                          </label>
-                          <div class="col-lg-8">
-                            <input type="password" class="form-control" placeholder="二级密码" name="second_password" />
-                          </div>
-                        </div>
-                        <hr />
-                        <div class="form-group">
-                          <div class="col-lg-offset-1 col-lg-9">
-                            <button type="submit" class="btn btn-primary">
+                            </select></td>
+            </TR>
+              <TR>
+              <TD class="tbkey">二级密码：</td>
+              <TD class="tbval">  <input type="password" class="form-control" placeholder="二级密码" name="second_password" /></td>
+            </TR>
+
+            <TR>
+                <TD colspan="2">
+             <button type="submit" class="btn btn-primary">
                               提交
                             </button>
-                          </div>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Matter ends -->
+                </td>
+            </TR>
+        </TABLE>
+      </form>
     </div>
-    <!-- Mainbar ends -->
-    <div class="clearfix">
-    </div>
-    <!-- Content ends -->
-    <include file="Public/footer" />
-    <include file="Public/script" />
-    <script>
+
+</div>
+</div>
+<script>
       $('[name=option]').change(function(){
         var val = $(this).val();
         if (val == 3 || val == 4) {
-          $('[name=to_member_id]').parents('.form-group').show();
+          $('[name=to_member_id]').parents('tr').show();
         } else {
-          $('[name=to_member_id]').parents('.form-group').hide();
+          $('[name=to_member_id]').parents('tr').hide();
         }
       })
     </script>
-  </body>
+</body>
 </html>
