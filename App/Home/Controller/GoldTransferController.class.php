@@ -18,7 +18,9 @@ class GoldTransferController extends BaseController
     public function insert()
     {
         $model = D('GoldTransfer');
-
+        if (C('open_transfer_status') != 1) {
+            $this->error('管理员禁止转账操作');
+        }
         if (!$model->create()) {
             $this->error($model->getError());
         }

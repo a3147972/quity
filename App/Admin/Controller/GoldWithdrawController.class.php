@@ -80,6 +80,9 @@ class GoldWithDrawController extends BaseController
         }
     }
 
+    /**
+     * 导出
+     */
     public function export()
     {
         $map = $this->_filter();
@@ -101,20 +104,20 @@ class GoldWithDrawController extends BaseController
         foreach ($list as $k => $v) {
             $num = $k + 1;
             $objPHPExcel->setActiveSheetIndex(0)
-                        //Excel的第A列，uid是你查出数组的键值，下面以此类推
-                        ->setCellValue('A' . $num, $v['id'])
-                        ->setCellValue('B' . $num, $v['username'])
-                        ->setCellValue('B' . $num, $v['name'])
-                        ->setCellValue('C' . $num, $v['gold'])
-                        ->setCellValue('D' . $num, $v['deposit_bank'])
-                        ->setCellValue('E' . $num, $v['deposit_code_number'])
-                        ->setCellValue('F' . $num, $v['deposit_name'])
-                        ->setCellValue('G' . $num, $v['deposit_address']);
+            //Excel的第A列，uid是你查出数组的键值，下面以此类推
+                ->setCellValue('A' . $num, $v['id'])
+                ->setCellValue('B' . $num, $v['username'])
+                ->setCellValue('B' . $num, $v['name'])
+                ->setCellValue('C' . $num, $v['gold'])
+                ->setCellValue('D' . $num, $v['deposit_bank'])
+                ->setCellValue('E' . $num, $v['deposit_code_number'])
+                ->setCellValue('F' . $num, $v['deposit_name'])
+                ->setCellValue('G' . $num, $v['deposit_address']);
         }
         $objPHPExcel->getActiveSheet()->setTitle('User');
         $objPHPExcel->setActiveSheetIndex(0);
         header('Content-Type: application/vnd.ms-excel');
-        header('Content-Disposition: attachment;filename="' . $name . '.xls"');
+        header('Content-Disposition: attachment;filename="' . $name . '.csv"');
         header('Cache-Control: max-age=0');
         $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         $objWriter->save('php://output');

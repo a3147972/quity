@@ -113,4 +113,48 @@ class MemberController extends BaseController
             $this->display();
         }
     }
+
+    /**
+     * 导出
+     */
+    public function export()
+    {
+        $map = $this->_filter();
+
+        $list = D('Member')->_list($map);
+        $title['id'] = '编号';
+        $title['username'] = '用户名';
+        $title['name'] = '姓名';
+        $title['gold'] = '奖金币';
+        $title['quity'] = '股权数';
+        $title['quity_gold'] = '股权奖金';
+        $title['phone'] = '联系方式';
+        $title['id_number'] = '身份证号';
+        array_unshift($list, $title);
+        import('Common.Tools.PHPExcel.PHPExcel');
+
+        $objPHPExcel = new \PHPExcel();
+        $name = time();
+        foreach ($list as $k => $v) {
+            $num = $k + 1;
+            $objPHPExcel->setActiveSheetIndex(0)
+            //Excel的第A列，uid是你查出数组的键值，下面以此类推
+                ->setCellValue('A' . $num, $v['id'])
+                ->setCellValue('B' . $num, $v['username'])
+                ->setCellValue('B' . $num, $v['name'])
+                ->setCellValue('C' . $num, $v['gold'])
+                ->setCellValue('D' . $num, $v['quity'])
+                ->setCellValue('E' . $num, $v['quity_gold'])
+                ->setCellValue('F' . $num, $v['phone'])
+                ->setCellValue('G' . $num, $v['id_number']);
+        }
+        $objPHPExcel->getActiveSheet()->setTitle('User');
+        $objPHPExcel->setActiveSheetIndex(0);
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="' . $name . '.csv"');
+        header('Cache-Control: max-age=0');
+        $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+        $objWriter->save('php://output');
+        exit;
+    }
 }

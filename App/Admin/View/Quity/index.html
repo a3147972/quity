@@ -42,6 +42,87 @@
                   </div>
                 </div>
                 <div class="widget-content">
+                  <table class="table table-hover table-bordered">
+                    <thead>
+                      <tr>
+                        <th>
+                          ID
+                        </th>
+                        <th>
+                          用户名
+                        </th>
+                        <th>分红金额</th>
+                        <th>操作时间</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <volist name="list" id="vo">
+                        <tr>
+                          <td>{$vo.id}</td>
+                          <td>{$vo.username}</td>
+                          <td>{$vo.gold}</td>
+                          <td>
+                          {$vo.ctime}
+                          </td>
+                        </tr>
+                      </volist>
+                    </tbody>
+                  </table>
+                  <div class="table-footer">
+                      <div class="col-md-12">
+                        <ul class="pagination">
+                        <volist name="page_list" id="page_vo">
+                          <switch name="page_vo.name">
+                            <case value="prev">
+                              <eq name="page_vo.status" value="disabled">
+                                 <li class="disabled">
+                                  <a href="javascript:void(0);">
+                                    ← Prev
+                                  </a>
+                                </li>
+                              <else />
+                                <li>
+                                  <a href="{$page_vo.url}">
+                                    ← Prev
+                                  </a>
+                                </li>
+                              </eq>
+                            </case>
+                            <case value="list">
+                              <eq name="page_vo.status" value="now">
+                                 <li class="active">
+                                  <a href="javascript:void(0);">
+                                    {$page_vo.page}
+                                  </a>
+                                </li>
+                              <else />
+                                <li>
+                                  <a href="{$page_vo.url}">
+                                    {$page_vo.page}
+                                  </a>
+                                </li>
+                              </eq>
+                            </case>
+                            <case value="next">
+                              <eq name="page_vo.status" value="disabled">
+                                 <li class="disabled">
+                                  <a href="javascript:void(0);">
+                                    Next →
+                                  </a>
+                                </li>
+                              <else />
+                                <li>
+                                  <a href="{$page_vo.url}">
+                                    Next →
+                                  </a>
+                                </li>
+                              </eq>
+                            </case>
+                          </switch>
+                        </volist>
+                        </ul>
+                      </div>
+                    </div>
                 </div>
               </div>
             </div>

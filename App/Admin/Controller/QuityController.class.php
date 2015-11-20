@@ -7,6 +7,33 @@ class QuityController extends BaseController
 {
     public function index()
     {
+        $page = I('page', 1);
+        $page_size = I('page_size', 10);
+        $order = I('order', '');
+
+        $model = D('QuityGoldDividend');
+
+        //查询值
+        $pk = $model->getPk();
+        $order = empty($order) ? $pk . ' desc' : $order;
+        $map = method_exists($this, '_filter') ? $this->_filter() : array();
+
+        //查询数据
+        if (method_exists($model, 'lists')) {
+            $list = $model->lists($map, '', $order, $page, $page_size);
+        } else {
+            $list = $model->_list($map, '', $order, $page, $page_size);
+        }
+
+        $count = $model->_count($map);
+
+        //分页处理
+        $page_list = $this->page($count, $page, $page_size);
+
+        $this->assign('page_list', $page_list);
+        $this->assign('count', $count);
+        $this->assign('list', $list);
+
         $this->display();
     }
     public function add()
@@ -83,7 +110,6 @@ class QuityController extends BaseController
         $lock_map['status'] = 0;
 
         $lock_list = D('QuityLock')->_list($lock_map, $lock_field);
-
         if (empty($lock_list)) {
             $this->error('没有在锁定中的股权');
         }
@@ -104,17 +130,19 @@ class QuityController extends BaseController
         $dividend_data = array();
         foreach ($member_list as $_k => $_v) {
             $member_list[$_k]['quity_gold'] = $_v['quity_gold'] + $list[$_v['id']];
-            $dividend_data['member_id'] = $_v['id'];
-            $dividend_data['gold'] = $list[$_v['id']];
-            $dividend_data['create_time'] = now();
-            $dividend_data['modify_time'] = now();
+            $_dividend_data['id'] = null;
+            $_dividend_data['member_id'] = $_v['id'];
+            $_dividend_data['gold'] = $list[$_v['id']];
+            $_dividend_data['create_time'] = now();
+            $_dividend_data['modify_time'] = now();
+            array_push($dividend_data, $_dividend_data);
         }
 
         $MemberModel->startTrans();
-
         $result = $MemberModel->addAll($member_list, array(), true);
         $dividend_result = D('QuityGoldDividend')->addAll($dividend_data);
-        if ($result) {
+
+        if ($result && $dividend_result) {
             $MemberModel->commit();
             $this->success('已完成分红');
         } else {
