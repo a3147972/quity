@@ -110,7 +110,7 @@ class GoldWithDrawController extends BaseController
                 ->setCellValue('B' . $num, $v['name'])
                 ->setCellValue('C' . $num, $v['gold'])
                 ->setCellValue('D' . $num, $v['deposit_bank'])
-                ->setCellValue('E' . $num, $v['deposit_code_number'])
+                ->setCellValue('E' . $num, $v['deposit_code_number'] . ' ')
                 ->setCellValue('F' . $num, $v['deposit_name'])
                 ->setCellValue('G' . $num, $v['deposit_address']);
         }
