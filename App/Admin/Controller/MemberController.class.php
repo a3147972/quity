@@ -145,8 +145,8 @@ class MemberController extends BaseController
                 ->setCellValue('C' . $num, $v['gold'])
                 ->setCellValue('D' . $num, $v['quity'])
                 ->setCellValue('E' . $num, $v['quity_gold'])
-                ->setCellValue('F' . $num, $v['phone'])
-                ->setCellValue('G' . $num, $v['id_number']);
+                ->setCellValue('F' . $num, $v['phone'] . ' ')
+                ->setCellValue('G' . $num, $v['id_number'] . ' ');
         }
         $objPHPExcel->getActiveSheet()->setTitle('User');
         $objPHPExcel->setActiveSheetIndex(0);
